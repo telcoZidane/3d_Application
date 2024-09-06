@@ -1,0 +1,62 @@
+[
+    {
+        "type": 1,
+        "url": "/models_Object3d/Office_base06.glb",
+        "position": { "x": 0, "y": -0.5, "z": 0 },
+        "scale": 4,
+        "status": 1,
+        "description":"Operational",
+        "components": [
+            {
+                "type": 2,
+                "url": "/models_Object3d/ModelPc.glb",
+                "position": { "x": 10, "y": 0.5, "z": -2 },
+                "scale": 1,
+                "status": 1,
+                "description":"Working"
+            },
+            {
+                "type": 2,
+                "url": "/models_Object3d/ModelPc.glb",
+                "position": { "x": 15, "y": 0.5, "z": -2 },
+                "scale": 1,
+                "status": 2,
+                "description":"Not Working"
+            },
+            {
+                "type": 2,
+                "url": "/models_Object3d/ModelPc.glb",
+                "position": { "x": 20, "y": 0.5, "z": -2 },
+                "scale": 1,
+                "status": 1,
+                "description":"Working"
+            }
+        ]
+    },
+    {
+        "type": 1,
+        "url": "/models_Object3d/Office_base06.glb",
+        "position": { "x": 24, "y": -0.5, "z": 0 },
+        "scale": 4,
+        "status": 1,
+        "description":"Operational",
+        "components": [
+            {
+                "type": 2,
+                "url": "/models_Object3d/ModelPc.glb",
+                "position": { "x": 1, "y": 0.5, "z": -2 },
+                "scale":  1,
+                "status": 1,
+                "description":"Working"
+            },
+            {
+                "type": 2,
+                "url": "/models_Object3d/ModelPc.glb",
+                "position": { "x": 3, "y": 0.5, "z": -2 },
+                "scale": 1,
+                "status": 1,
+                "description":"Working" 
+            }
+        ]
+    }
+]
