@@ -9,7 +9,7 @@ import {
     TOUCH,
     Vector2,
     Vector3
-  } from "./chunk-DEEFU7IG.js?v=7262d7e9";
+  } from "./chunk-DEEFU7IG.js";
   
   // node_modules/three/examples/jsm/controls/OrbitControls.js
   var _changeEvent = { type: "change" };

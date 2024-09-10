@@ -43,7 +43,7 @@ import {
     Vector3,
     Vector4,
     VectorKeyframeTrack
-  } from "./chunk-DEEFU7IG.js?v=7262d7e9";
+  } from "./chunk-DEEFU7IG.js";
   
   // node_modules/three/examples/jsm/libs/fflate.module.js
   var ch2 = {};
