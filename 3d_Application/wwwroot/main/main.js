@@ -293,9 +293,11 @@ function onMouseClick(event) {
 function moveCameraToTarget(target) {
     const targetPosition = new THREE.Vector3();
     target.getWorldPosition(targetPosition);
-    console.log("cococ position camera : X: " + targetPosition.x + "Y: " + targetPosition.y + "Z " + targetPosition.z);
+    console.log("cococ position camera 1: X: " + targetPosition.x + "Y: " + targetPosition.y + "Z " + targetPosition.z+3);
 
-
+    targetPosition.set(targetPosition.x +3, targetPosition.y +  2, targetPosition.z);
+    console.log("cococ position camera 2: X: " + targetPosition.x + "Y: " + targetPosition.y + "Z " + targetPosition.z);
+    
     const startPosition = camera.position.clone();
     const startTime = performance.now();
     const duration = 1000;
@@ -305,6 +307,7 @@ function moveCameraToTarget(target) {
         const t = Math.min(elapsed / duration, 1);
 
         camera.position.lerpVectors(startPosition, targetPosition, t);
+        camera.rotation.set(target.rotation.x, target.rotation.y, target.rotation.z)
         camera.lookAt(targetPosition);
 
         if (t < 1) {
