@@ -334,3 +334,53 @@ function animate() {
 }
 
 animate();
+
+
+
+//function createRoomCubes(roomData) {
+//    roomData.forEach(room => {
+//        // Create a cube for the room
+//        const roomGeometry = new THREE.BoxGeometry(10, 10, 10); // Adjust size as needed
+//        const roomMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000, transparent: true, opacity: 0.3 });
+//        const roomCube = new THREE.Mesh(roomGeometry, roomMaterial);
+
+//        // Set position and add to the scene
+//        roomCube.position.set(room.position.x, room.position.y, room.position.z);
+//        roomCube.userData.roomName = room.name; // Optional: Add room name to userData
+//        scene.add(roomCube);
+
+//        // Create a group for models in this room
+//        const roomGroup = new THREE.Group();
+//        roomGroup.position.copy(roomCube.position);
+//        scene.add(roomGroup);
+
+//        // Add roomGroup to models array for potential drag controls
+//        models.push(roomGroup);
+
+//        // Load and position models inside the room
+//        room.components.forEach(component => {
+//            const model = new SimpleModel(
+//                component.url,
+//                {
+//                    x: component.position.x,
+//                    y: component.position.y,
+//                    z: component.position.z,
+//                },
+//                component.scale,
+//                component.type,
+//                component.status,
+//                component.description,
+//                component.rotation
+//            );
+//            model.load(scene);
+//            if (model.model) { // Check if the model was successfully loaded
+//                roomGroup.add(model.model); // Add the loaded model to the room group
+//            } else {
+//                console.warn('Model was not loaded properly:', model);
+//            }
+//        });
+//    });
+
+//    // Setup Drag Controls
+//    setupDragControls();
+//}
