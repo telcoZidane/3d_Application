@@ -15,8 +15,8 @@ camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 // Renderer setup
 const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+renderer.setSize(window.innerWidth * 0.83, window.innerHeight); // Adjust for col-10 width
+document.getElementById('main-view').appendChild(renderer.domElement);
 
 // Controls setup
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -293,11 +293,11 @@ function onMouseClick(event) {
 function moveCameraToTarget(target) {
     const targetPosition = new THREE.Vector3();
     target.getWorldPosition(targetPosition);
-    console.log("cococ position camera 1: X: " + targetPosition.x + "Y: " + targetPosition.y + "Z " + targetPosition.z+3);
+    console.log("cococ position camera 1: X: " + targetPosition.x + "Y: " + targetPosition.y + "Z " + targetPosition.z + 3);
 
-    targetPosition.set(targetPosition.x +3, targetPosition.y +  2, targetPosition.z);
+    targetPosition.set(targetPosition.x + 3, targetPosition.y + 2, targetPosition.z);
     console.log("cococ position camera 2: X: " + targetPosition.x + "Y: " + targetPosition.y + "Z " + targetPosition.z);
-    
+
     const startPosition = camera.position.clone();
     const startTime = performance.now();
     const duration = 1000;
@@ -334,6 +334,7 @@ function animate() {
 }
 
 animate();
+
 
 
 
