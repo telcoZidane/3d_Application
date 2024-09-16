@@ -15,8 +15,17 @@ camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 // Renderer setup
 const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth * 0.83, window.innerHeight); // Adjust for col-10 width
 document.getElementById('main-view').appendChild(renderer.domElement);
+
+// Adjust renderer size according to the div
+function resizeRenderer() {
+    const mainView = document.getElementById('main-view');
+    renderer.setSize(mainView.clientWidth, window.innerHeight);
+    camera.aspect = mainView.clientWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+}
+resizeRenderer(); // Initial resize
+window.addEventListener('resize', resizeRenderer); // Adjust on window resize
 
 // Controls setup
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -260,8 +269,9 @@ function onMouseClick(event) {
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
 
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    const rect = renderer.domElement.getBoundingClientRect();
+    mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObjects(scene.children, true);
@@ -293,10 +303,7 @@ function onMouseClick(event) {
 function moveCameraToTarget(target) {
     const targetPosition = new THREE.Vector3();
     target.getWorldPosition(targetPosition);
-    console.log("cococ position camera 1: X: " + targetPosition.x + "Y: " + targetPosition.y + "Z " + targetPosition.z + 3);
-
     targetPosition.set(targetPosition.x + 3, targetPosition.y + 2, targetPosition.z);
-    console.log("cococ position camera 2: X: " + targetPosition.x + "Y: " + targetPosition.y + "Z " + targetPosition.z);
 
     const startPosition = camera.position.clone();
     const startTime = performance.now();
@@ -307,7 +314,7 @@ function moveCameraToTarget(target) {
         const t = Math.min(elapsed / duration, 1);
 
         camera.position.lerpVectors(startPosition, targetPosition, t);
-        camera.rotation.set(target.rotation.x, target.rotation.y, target.rotation.z)
+        camera.rotation.set(target.rotation.x, target.rotation.y, target.rotation.z);
         camera.lookAt(targetPosition);
 
         if (t < 1) {
@@ -324,7 +331,7 @@ fetchModelData().then(data => {
 });
 
 // Event listener for mouse click
-window.addEventListener('click', onMouseClick);
+renderer.domElement.addEventListener('click', onMouseClick);
 
 // Animation loop
 function animate() {
@@ -334,9 +341,6 @@ function animate() {
 }
 
 animate();
-
-
-
 
 //function createRoomCubes(roomData) {
 //    roomData.forEach(room => {

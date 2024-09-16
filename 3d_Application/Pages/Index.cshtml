@@ -3,11 +3,22 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
-<div id="status-card" style="display:none; position: absolute; top: 10px; left: 10px; background: white; padding: 10px; border: 1px solid #ddd;"></div>
-
-<div class="row">
-    <div class="col-10" id="main-view"></div>
-    <div class="col-2" id="sidebar"></div>
+<div id="status-card" class="card position-fixed" style="display: none;">
+    <!-- Status card content -->
+</div>
+<div class="row no-gutters">
+    <div id="main-view" class="col-10">
+        <!-- Three.js renderer will be appended here -->
+    </div>
+    <nav id="sidebar" class="col-2 bg-light expanded">
+        <button id="toggle-btn" class="btn btn-primary" type="button">
+            <span id="toggle-icon" class="bi bi-chevron-left"></span>
+        </button>
+        <!-- Sidebar content -->
+        <div class="mt-3">
+            <h5>Sidebar Content</h5>
+        </div>
+    </nav>
 </div>
 <script type="module" src="~/main/main.js"></script>
+<script src="~/main/CustomPage.js"></script>

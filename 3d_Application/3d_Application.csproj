@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\lib\three\" />
-    <Folder Include="wwwroot\main\" />
   </ItemGroup>
 
 </Project>
