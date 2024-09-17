@@ -1,19 +1,11 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
-    const sidebar = document.getElementById('sidebar');
-    const toggleBtn = document.getElementById('toggle-btn');
-    const toggleIcon = document.getElementById('toggle-icon');
+﻿function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main-view").style.marginLeft = "250px";
+    document.getElementById("status-card").style.marginLeft = "250px"
+}
 
-    toggleBtn.addEventListener('click', function () {
-        if (sidebar.classList.contains('expanded')) {
-            sidebar.classList.remove('expanded');
-            sidebar.classList.add('collapsed');
-            toggleIcon.classList.remove('bi-chevron-left');
-            toggleIcon.classList.add('bi-chevron-right');
-        } else {
-            sidebar.classList.remove('collapsed');
-            sidebar.classList.add('expanded');
-            toggleIcon.classList.remove('bi-chevron-right');
-            toggleIcon.classList.add('bi-chevron-left');
-        }
-    });
-});
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main-view").style.marginLeft = "0";
+    document.getElementById("status-card").style.marginLeft = "0"
+}
