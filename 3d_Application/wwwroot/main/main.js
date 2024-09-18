@@ -366,6 +366,32 @@ function moveCameraToTarget(target) {
 
     requestAnimationFrame(animateCamera);
 }
+
+function moveCameraToTarget(position) {
+
+    const targetPosition = new THREE.Vector3();
+    targetPosition.set(position.x + 3, position.y + 2, position.z);
+
+    const startPosition = camera.position.clone();
+    const startTime = performance.now();
+    const duration = 1000;
+
+    function animateCamera(time) {
+        const elapsed = time - startTime;
+        const t = Math.min(elapsed / duration, 1);
+
+        camera.position.lerpVectors(startPosition, targetPosition, t);
+        camera.rotation.set(target.rotation.x, target.rotation.y, target.rotation.z);
+        camera.lookAt(targetPosition);
+
+        if (t < 1) {
+            requestAnimationFrame(animateCamera);
+        }
+    }
+
+    requestAnimationFrame(animateCamera);
+}
+
 // Fetch model data and load models
 fetchModelData().then(data => {
     createModelsFromAPI(data);
@@ -382,57 +408,3 @@ function animate() {
 }
 
 animate();
-
-function createRoomCubes(roomData) {
-    roomData.forEach(room => {
-        // Create a cube for the room
-        const roomGeometry = new THREE.BoxGeometry(10, 10, 10); // Adjust size as needed
-        const roomMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000, transparent: true, opacity: 0.3 });
-        const roomCube = new THREE.Mesh(roomGeometry, roomMaterial);
-
-        // Set position and add to the scene
-        roomCube.position.set(room.position.x, room.position.y, room.position.z);
-        roomCube.userData.roomName = room.name; // Optional: Add room name to userData
-        scene.add(roomCube);
-
-        // Create a group for models in this room
-        const roomGroup = new THREE.Group();
-        roomGroup.position.copy(roomCube.position);
-        scene.add(roomGroup);
-
-        // Add roomGroup to models array for potential drag controls
-      /*  models.push(roomGroup);*/
-
-        // Load and position models inside the room
-        //room.components.forEach(component => {
-        //    const model = new SimpleModel(
-        //        component.url,
-        //        {
-        //            x: component.position.x,
-        //            y: component.position.y,
-        //            z: component.position.z,
-        //        },
-        //        component.scale,
-        //        component.type,
-        //        component.status,
-        //        component.description,
-        //        component.rotation
-        //    );
-        //    model.load(scene);
-        //    if (model.model) { // Check if the model was successfully loaded
-        //        roomGroup.add(model.model); // Add the loaded model to the room group
-        //    } else {
-        //        console.warn('Model was not loaded properly:', model);
-        //    }
-        //});
-    });
-
-    // Setup Drag Controls
-    setupDragControls();
-}
-//const roomData = [
-//    { position: { x: 0, y: 0, z: 0 }, name: 'Room1' },
-//    { position: { x: 0, y: 20, z: 0 }, name: 'Room2' }
-//];
-
-//createRoomCubes(roomData);
