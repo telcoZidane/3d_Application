@@ -15,59 +15,76 @@
             "y": 0,
             "z": 0
         },
-        "components": [
-            {
-                "type": 2,
-                "url": "/models_Object3d/ModelPc.glb",
-                "position": {
-                    "x": 10,
-                    "y": 0.5,
-                    "z": -2
-                },
-                "scale": 1,
-                "status": 1,
-                "description": "Working",
-                "rotation": {
-                    "x": 0,
-                    "y": 90,
-                    "z": 0
-                }
-            },
-            {
-                "type": 2,
-                "url": "/models_Object3d/ModelPc.glb",
-                "position": {
-                    "x": 15,
-                    "y": 0.5,
-                    "z": -2
-                },
-                "scale": 1,
-                "status": 2,
-                "description": "Not Working",
-                "rotation": {
-                    "x": 0,
-                    "y": 10,
-                    "z": 0
-                }
-            },
-            {
-                "type": 2,
-                "url": "/models_Object3d/ModelPc.glb",
-                "position": {
-                    "x": 20,
-                    "y": 0.5,
-                    "z": -2
-                },
-                "scale": 1,
-                "status": 1,
-                "description": "Working",
-                "rotation": {
-                    "x": 0,
-                    "y": 0,
-                    "z": 0
-                }
-            }
-        ]
+      "components": [
+        {
+          "type": 3,
+          "url": "",
+          "position": {
+            "x": 8,
+            "y": 5,
+            "z": 0
+          },
+          "scale": 10,
+          "status": 1,
+          "description": "zone 1",
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        {
+          "type": 2,
+          "url": "/models_Object3d/ModelPc.glb",
+          "position": {
+            "x": 10,
+            "y": 0.5,
+            "z": -2
+          },
+          "scale": 1,
+          "status": 1,
+          "description": "Working",
+          "rotation": {
+            "x": 0,
+            "y": 90,
+            "z": 0
+          }
+        },
+        {
+          "type": 2,
+          "url": "/models_Object3d/ModelPc.glb",
+          "position": {
+            "x": 15,
+            "y": 0.5,
+            "z": -2
+          },
+          "scale": 1,
+          "status": 2,
+          "description": "Not Working",
+          "rotation": {
+            "x": 0,
+            "y": 10,
+            "z": 0
+          }
+        },
+        {
+          "type": 2,
+          "url": "/models_Object3d/ModelPc.glb",
+          "position": {
+            "x": 20,
+            "y": 0.5,
+            "z": -2
+          },
+          "scale": 1,
+          "status": 1,
+          "description": "Working",
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        }
+      ]
     },
     {
         "type": 1,

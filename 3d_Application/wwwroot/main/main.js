@@ -90,6 +90,7 @@ class EnumHandler {
 const ModelsType = Object.freeze({
     SUPPER_MODEL: { displayName: "Office Model", value: 1 },
     PC_MODEL: { displayName: "PC Model", value: 2 },
+    CUBEZONE_MODEL: { displayName: "Cube zone Model", value: 3 },
 });
 
 const ModelStatus = Object.freeze({
@@ -115,59 +116,76 @@ class SimpleModel {
     }
 
     load(scene) {
-        const loader = this.url.endsWith('.glb') ? new GLTFLoader() : new FBXLoader();
+        // Add zone cube hire ...
+        if (this.type === ModelsType.CUBEZONE_MODEL.value) {
+            const roomGeometry = new THREE.BoxGeometry(this.scale, this.scale, this.scale); // Adjust size as needed
+            const roomMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000, transparent: true, opacity: 0.3 });
+            const roomCube = new THREE.Mesh(roomGeometry, roomMaterial);
 
-        loader.load(this.url, (object) => {
-            this.model = this.url.endsWith('.glb') ? object.scene : object;
-            this.model.position.set(this.position.x, this.position.y, this.position.z);
-            this.model.scale.set(this.scale, this.scale, this.scale);
+            // Set position and add to the scene
+            roomCube.position.set(this.position.x, this.position.y, this.position.z);
+            roomCube.userData = { parentModel: this };
+            scene.add(roomCube);
+        }
+        else {
 
-            // Apply rotation
-            this.model.rotation.set(
-                this.rotation.x,
-                this.rotation.y,
-                this.rotation.z
-            );
+            const loader = this.url.endsWith('.glb') ? new GLTFLoader() : new FBXLoader();
 
-            // Traverse the model and set userData for meshes
-            this.model.traverse((child) => {
-                if (child.isMesh) {
-                    child.userData = { parentModel: this };
-                    // Set opacity to 0.5 on load
-                    child.material.transparent = true;
-                    child.material.opacity = 0.5;
-                }
+            loader.load(this.url, (object) => {
+                this.model = this.url.endsWith('.glb') ? object.scene : object;
+                this.model.position.set(this.position.x, this.position.y, this.position.z);
+                this.model.scale.set(this.scale, this.scale, this.scale);
+
+                // Apply rotation
+                this.model.rotation.set(
+                    this.rotation.x,
+                    this.rotation.y,
+                    this.rotation.z
+                );
+
+                // Traverse the model and set userData for meshes
+                this.model.traverse((child) => {
+                    if (child.isMesh) {
+                        child.userData = { parentModel: this };
+                        // Set opacity to 0.5 on load
+                        child.material.transparent = true;
+                        child.material.opacity = 0.5;
+                    }
+                });
+
+                scene.add(this.model);
+
+                // Load child components if any
+                this.loadComponents(scene);
+
+                // Set initial color based on status
+                this.updateColor();
+            }, undefined, (error) => {
+                console.error('Error loading model:', error);
             });
-
-            scene.add(this.model);
-
-            // Load child components if any
-            this.loadComponents(scene);
-
-            // Set initial color based on status
-            this.updateColor();
-        }, undefined, (error) => {
-            console.error('Error loading model:', error);
-        });
+        }
+ 
     }
 
     loadComponents(scene) {
         this.components.forEach(componentData => {
-            const component = new SimpleModel(
-                componentData.url,
-                {
-                    x: this.position.x + componentData.position.x,
-                    y: this.position.y + componentData.position.y,
-                    z: this.position.z + componentData.position.z,
-                },
-                componentData.scale,
-                componentData.type,
-                componentData.status,
-                componentData.description,
-                componentData.rotation // Pass rotation to the component
-            );
-            component.load(scene);
-            models.push(component);
+                const component = new SimpleModel(
+                    componentData.url,
+                    {
+                        x: this.position.x + componentData.position.x,
+                        y: this.position.y + componentData.position.y,
+                        z: this.position.z + componentData.position.z,
+                    },
+                    componentData.scale,
+                    componentData.type,
+                    componentData.status,
+                    componentData.description,
+                    componentData.rotation // Pass rotation to the component
+                );
+                component.load(scene);
+                models.push(component);
+            
+            
         });
     }
 
@@ -286,7 +304,7 @@ function onMouseClick(event) {
                     model.setOpacity(0.5);
                 } else {
                     // Only move camera if the model type is not 'support'
-                    if (parentModel.type !== 1) {
+                    if (parentModel.type !== ModelsType.SUPPER_MODEL.value && parentModel.type !== ModelsType.CUBEZONE_MODEL.value) {
                         model.setOpacity(1);
                         moveCameraToTarget(parentModel.model);
                     }
@@ -324,7 +342,30 @@ function moveCameraToTarget(target) {
 
     requestAnimationFrame(animateCamera);
 }
+function moveCameraToTarget(target) {
+    const targetPosition = new THREE.Vector3();
+    target.getWorldPosition(targetPosition);
+    targetPosition.set(targetPosition.x + 3, targetPosition.y + 2, targetPosition.z);
 
+    const startPosition = camera.position.clone();
+    const startTime = performance.now();
+    const duration = 1000;
+
+    function animateCamera(time) {
+        const elapsed = time - startTime;
+        const t = Math.min(elapsed / duration, 1);
+
+        camera.position.lerpVectors(startPosition, targetPosition, t);
+        camera.rotation.set(target.rotation.x, target.rotation.y, target.rotation.z);
+        camera.lookAt(targetPosition);
+
+        if (t < 1) {
+            requestAnimationFrame(animateCamera);
+        }
+    }
+
+    requestAnimationFrame(animateCamera);
+}
 // Fetch model data and load models
 fetchModelData().then(data => {
     createModelsFromAPI(data);
@@ -360,32 +401,38 @@ function createRoomCubes(roomData) {
         scene.add(roomGroup);
 
         // Add roomGroup to models array for potential drag controls
-        models.push(roomGroup);
+      /*  models.push(roomGroup);*/
 
         // Load and position models inside the room
-        room.components.forEach(component => {
-            const model = new SimpleModel(
-                component.url,
-                {
-                    x: component.position.x,
-                    y: component.position.y,
-                    z: component.position.z,
-                },
-                component.scale,
-                component.type,
-                component.status,
-                component.description,
-                component.rotation
-            );
-            model.load(scene);
-            if (model.model) { // Check if the model was successfully loaded
-                roomGroup.add(model.model); // Add the loaded model to the room group
-            } else {
-                console.warn('Model was not loaded properly:', model);
-            }
-        });
+        //room.components.forEach(component => {
+        //    const model = new SimpleModel(
+        //        component.url,
+        //        {
+        //            x: component.position.x,
+        //            y: component.position.y,
+        //            z: component.position.z,
+        //        },
+        //        component.scale,
+        //        component.type,
+        //        component.status,
+        //        component.description,
+        //        component.rotation
+        //    );
+        //    model.load(scene);
+        //    if (model.model) { // Check if the model was successfully loaded
+        //        roomGroup.add(model.model); // Add the loaded model to the room group
+        //    } else {
+        //        console.warn('Model was not loaded properly:', model);
+        //    }
+        //});
     });
 
     // Setup Drag Controls
     setupDragControls();
 }
+//const roomData = [
+//    { position: { x: 0, y: 0, z: 0 }, name: 'Room1' },
+//    { position: { x: 0, y: 20, z: 0 }, name: 'Room2' }
+//];
+
+//createRoomCubes(roomData);
