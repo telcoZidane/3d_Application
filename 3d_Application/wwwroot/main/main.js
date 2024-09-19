@@ -52,6 +52,7 @@ floor.position.set(0, -1, 0); // Rotate floor to be horizontal
 scene.add(floor);
 
 let models = [];
+let complitedLoading = false;
 let draggableObjects = []; // Store draggable objects here
 let enabledDragModels = []; // Store models that can be dragged
 
@@ -164,7 +165,7 @@ class SimpleModel {
                 console.error('Error loading model:', error);
             });
         }
- 
+
     }
 
     loadComponents(scene) {
@@ -183,10 +184,9 @@ class SimpleModel {
                     componentData.rotation // Pass rotation to the component
                 );
                 component.load(scene);
-                models.push(component);
-            
-            
+            models.push(component);
         });
+        complitedLoading = true;
     }
 
     setOpacity(opacity) {
@@ -270,7 +270,7 @@ function displayStatusCard(model) {
         <p>Position: X=${model.position.x}, Y=${model.position.y}, Z=${model.position.z}</p>
         <p>Status: ${modelStatusHandler.getDisplayNameByValue(model.status) || 'N/A'}</p>
         <p>Description: ${model.description || 'No description available'}</p>
-        ${model.type !== 1 ? '<button class="btn btn-primary" id="enable-drag-btn">Enable Drag</button>' : ''}
+        ${(model.type !== ModelsType.SUPPER_MODEL.value && model.type !== ModelsType.CUBEZONE_MODEL.value) ? '<button class="btn btn-primary" id="enable-drag-btn">Enable Drag</button>' : ''}
     `;
 
     // Add event listener to the button to enable dragging
@@ -280,6 +280,21 @@ function displayStatusCard(model) {
             enableDragging(model);
         });
     }
+}
+
+function displayZoneButton(models) {
+    const zoneButtonContainer = document.getElementById('mySidenav'); // Ensure this element exists
+    zoneButtonContainer.innerHTML = zoneButtonContainer.innerHTML + ''; // Clear existing buttons
+
+    models.forEach(model => {
+        if (model.type === ModelsType.CUBEZONE_MODEL.value) {
+            const button = document.createElement('a');
+            button.textContent = "Go to Zone";
+            button.href = "javascript:void(0)";
+            button.onclick = () => moveCameraToZone(model.position);
+            zoneButtonContainer.appendChild(button);
+        }
+    });
 }
 
 // Function to handle mouse clicks
@@ -342,32 +357,8 @@ function moveCameraToTarget(target) {
 
     requestAnimationFrame(animateCamera);
 }
-function moveCameraToTarget(target) {
-    const targetPosition = new THREE.Vector3();
-    target.getWorldPosition(targetPosition);
-    targetPosition.set(targetPosition.x + 3, targetPosition.y + 2, targetPosition.z);
 
-    const startPosition = camera.position.clone();
-    const startTime = performance.now();
-    const duration = 1000;
-
-    function animateCamera(time) {
-        const elapsed = time - startTime;
-        const t = Math.min(elapsed / duration, 1);
-
-        camera.position.lerpVectors(startPosition, targetPosition, t);
-        camera.rotation.set(target.rotation.x, target.rotation.y, target.rotation.z);
-        camera.lookAt(targetPosition);
-
-        if (t < 1) {
-            requestAnimationFrame(animateCamera);
-        }
-    }
-
-    requestAnimationFrame(animateCamera);
-}
-
-function moveCameraToTarget(position) {
+function moveCameraToZone(position) {
 
     const targetPosition = new THREE.Vector3();
     targetPosition.set(position.x + 3, position.y + 2, position.z);
@@ -381,7 +372,6 @@ function moveCameraToTarget(position) {
         const t = Math.min(elapsed / duration, 1);
 
         camera.position.lerpVectors(startPosition, targetPosition, t);
-        camera.rotation.set(target.rotation.x, target.rotation.y, target.rotation.z);
         camera.lookAt(targetPosition);
 
         if (t < 1) {
@@ -405,6 +395,12 @@ function animate() {
     requestAnimationFrame(animate);
     controls.update();
     renderer.render(scene, camera);
+    if (complitedLoading) {
+        displayZoneButton(models);
+        complitedLoading = false;
+    }
 }
 
 animate();
+
+
