@@ -52,6 +52,7 @@ floor.position.set(0, -1, 0); // Rotate floor to be horizontal
 scene.add(floor);
 
 let models = [];
+let modelsCubeZone = [];
 let complitedLoading = false;
 let draggableObjects = []; // Store draggable objects here
 let enabledDragModels = []; // Store models that can be dragged
@@ -125,6 +126,7 @@ class SimpleModel {
 
             // Set position and add to the scene
             roomCube.position.set(this.position.x, this.position.y, this.position.z);
+            roomCube.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z);
             roomCube.userData = { parentModel: this };
             scene.add(roomCube);
         }
@@ -183,7 +185,12 @@ class SimpleModel {
                     componentData.description,
                     componentData.rotation // Pass rotation to the component
                 );
-                component.load(scene);
+            component.load(scene);
+            if (component.type === ModelsType.CUBEZONE_MODEL.value) {
+                if (!modelsCubeZone.includes(component)) {
+                    modelsCubeZone.push(component);
+                }
+            }
             models.push(component);
         });
         complitedLoading = true;
@@ -284,7 +291,7 @@ function displayStatusCard(model) {
 
 function displayZoneButton(models) {
     const zoneButtonContainer = document.getElementById('mySidenav'); // Ensure this element exists
-    zoneButtonContainer.innerHTML = zoneButtonContainer.innerHTML + ''; // Clear existing buttons
+    zoneButtonContainer.innerHTML =  '<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>'; // Clear existing buttons
 
     models.forEach(model => {
         if (model.type === ModelsType.CUBEZONE_MODEL.value) {
@@ -361,7 +368,7 @@ function moveCameraToTarget(target) {
 function moveCameraToZone(position) {
 
     const targetPosition = new THREE.Vector3();
-    targetPosition.set(position.x + 3, position.y + 2, position.z);
+    targetPosition.set(position.x - (position.x / 2), position.y + (position.y / 2), 6 );
 
     const startPosition = camera.position.clone();
     const startTime = performance.now();
@@ -373,6 +380,7 @@ function moveCameraToZone(position) {
 
         camera.position.lerpVectors(startPosition, targetPosition, t);
         camera.lookAt(targetPosition);
+        camera.rotation.set(-0.5, -0.5, -0.3);
 
         if (t < 1) {
             requestAnimationFrame(animateCamera);
@@ -395,8 +403,11 @@ function animate() {
     requestAnimationFrame(animate);
     controls.update();
     renderer.render(scene, camera);
+    //console.log("camera position | X : " + camera.position.x + " Y: " + camera.position.y + " Z:" + camera.position.z);
+    //console.log("camera Rotation | X : " + camera.rotation.x + " Y: " + camera.rotation.y + " Z:" + camera.rotation.z);
+
     if (complitedLoading) {
-        displayZoneButton(models);
+        displayZoneButton(modelsCubeZone);
         complitedLoading = false;
     }
 }

@@ -30,7 +30,7 @@
           "rotation": {
             "x": 0,
             "y": 0,
-            "z": 0
+            "z":0
           }
         },
         {
@@ -102,41 +102,58 @@
             "y": 0,
             "z": 0
         },
-        "components": [
-            {
-                "type": 2,
-                "url": "/models_Object3d/ModelPc.glb",
-                "position": {
-                    "x": 1,
-                    "y": 0.5,
-                    "z": -2
-                },
-                "scale": 1,
-                "status": 1,
-                "description": "Working",
-                "rotation": {
-                    "x": 0,
-                    "y": 0.7853981633974483,
-                    "z": 0
-                }
-            },
-            {
-                "type": 2,
-                "url": "/models_Object3d/ModelPc.glb",
-                "position": {
-                    "x": 3,
-                    "y": 0.5,
-                    "z": -2
-                },
-                "scale": 1,
-                "status": 1,
-                "description": "Working",
-                "rotation": {
-                    "x": 0,
-                    "y": 0.7853981633974483,
-                    "z": 0
-                }
-            }
-        ]
+      "components": [
+        {
+          "type": 3,
+          "url": "",
+          "position": {
+            "x": 8,
+            "y": 5,
+            "z": 0
+          },
+          "scale": 10,
+          "status": 1,
+          "description": "zone 1",
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        {
+          "type": 2,
+          "url": "/models_Object3d/ModelPc.glb",
+          "position": {
+            "x": 1,
+            "y": 0.5,
+            "z": -2
+          },
+          "scale": 1,
+          "status": 1,
+          "description": "Working",
+          "rotation": {
+            "x": 0,
+            "y": 0.7853981633974483,
+            "z": 0
+          }
+        },
+        {
+          "type": 2,
+          "url": "/models_Object3d/ModelPc.glb",
+          "position": {
+            "x": 3,
+            "y": 0.5,
+            "z": -2
+          },
+          "scale": 1,
+          "status": 1,
+          "description": "Working",
+          "rotation": {
+            "x": 0,
+            "y": 0.7853981633974483,
+            "z": 0
+          }
+        }
+      ]
     }
 ]
