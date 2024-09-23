@@ -7,7 +7,11 @@
             "y": 0,
             "z": 0
         },
-        "scale": 4,
+      "scale": {
+          "x": 4,
+          "y": 4,
+          "z": 4
+      },
         "status": 1,
         "description": "Operational",
         "rotation": {
@@ -21,16 +25,20 @@
           "url": "",
           "position": {
             "x": 8,
-            "y": 5,
+            "y": 4,
             "z": 0
           },
-          "scale": 10,
+          "scale": {
+            "x": 12,
+            "y": 11,
+            "z": 26
+          },
           "status": 1,
           "description": "zone 1",
           "rotation": {
             "x": 0,
             "y": 0,
-            "z":0
+            "z": 0
           }
         },
         {
@@ -41,7 +49,11 @@
             "y": 0.5,
             "z": -2
           },
-          "scale": 1,
+          "scale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+          },
           "status": 1,
           "description": "Working",
           "rotation": {
@@ -58,7 +70,11 @@
             "y": 0.5,
             "z": -2
           },
-          "scale": 1,
+          "scale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+          },
           "status": 2,
           "description": "Not Working",
           "rotation": {
@@ -75,7 +91,11 @@
             "y": 0.5,
             "z": -2
           },
-          "scale": 1,
+          "scale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+          },
           "status": 1,
           "description": "Working",
           "rotation": {
@@ -94,7 +114,11 @@
             "y": 0,
             "z": 0
         },
-        "scale": 4,
+      "scale": {
+          "x": 4,
+          "y": 4,
+          "z": 4
+      },
         "status": 1,
         "description": "Operational",
         "rotation": {
@@ -108,12 +132,16 @@
           "url": "",
           "position": {
             "x": 8,
-            "y": 5,
+            "y": 4,
             "z": 0
           },
-          "scale": 10,
+          "scale": {
+            "x": 12,
+            "y": 11,
+            "z": 26
+          },
           "status": 1,
-          "description": "zone 1",
+          "description": "zone 2",
           "rotation": {
             "x": 0,
             "y": 0,
@@ -128,7 +156,11 @@
             "y": 0.5,
             "z": -2
           },
-          "scale": 1,
+          "scale": {
+            "x": 1,
+            "y": 1,
+            "z": 1
+          },
           "status": 1,
           "description": "Working",
           "rotation": {
@@ -145,7 +177,11 @@
             "y": 0.5,
             "z": -2
           },
-          "scale": 1,
+          "scale": {
+              "x": 1,
+              "y": 1,
+              "z": 1
+          },
           "status": 1,
           "description": "Working",
           "rotation": {

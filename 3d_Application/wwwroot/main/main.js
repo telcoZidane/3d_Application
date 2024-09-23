@@ -120,7 +120,7 @@ class SimpleModel {
     load(scene) {
         // Add zone cube hire ...
         if (this.type === ModelsType.CUBEZONE_MODEL.value) {
-            const roomGeometry = new THREE.BoxGeometry(this.scale, this.scale, this.scale); // Adjust size as needed
+            const roomGeometry = new THREE.BoxGeometry(this.scale.x, this.scale.y, this.scale.z); // Adjust size as needed
             const roomMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000, transparent: true, opacity: 0.3 });
             const roomCube = new THREE.Mesh(roomGeometry, roomMaterial);
 
@@ -137,7 +137,7 @@ class SimpleModel {
             loader.load(this.url, (object) => {
                 this.model = this.url.endsWith('.glb') ? object.scene : object;
                 this.model.position.set(this.position.x, this.position.y, this.position.z);
-                this.model.scale.set(this.scale, this.scale, this.scale);
+                this.model.scale.set(this.scale.x, this.scale.y, this.scale.z);
 
                 // Apply rotation
                 this.model.rotation.set(
@@ -291,13 +291,12 @@ function displayStatusCard(model) {
 
 function displayZoneButton(models) {
     const zoneButtonContainer = document.getElementById('mySidenav'); // Ensure this element exists
-    zoneButtonContainer.innerHTML =  '<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>'; // Clear existing buttons
+    zoneButtonContainer.innerHTML =  '<a class="closebtn" onclick="closeNav()">&times;</a>'; // Clear existing buttons
 
     models.forEach(model => {
         if (model.type === ModelsType.CUBEZONE_MODEL.value) {
             const button = document.createElement('a');
-            button.textContent = "Go to Zone";
-            button.href = "javascript:void(0)";
+            button.textContent = `${model.description}`;
             button.onclick = () => moveCameraToZone(model.position);
             zoneButtonContainer.appendChild(button);
         }
