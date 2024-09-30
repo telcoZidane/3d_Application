@@ -24,27 +24,6 @@
           "type": 3,
           "url": "",
           "position": {
-            "x": -4,
-            "y": 4,
-            "z": -14.5
-          },
-          "scale": {
-            "x": 12,
-            "y": 11,
-            "z": 15
-          },
-          "status": 1,
-          "description": "ZOf1-2",
-          "rotation": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          }
-        },
-        {
-          "type": 3,
-          "url": "",
-          "position": {
             "x": 8,
             "y": 4,
             "z": 0
@@ -55,7 +34,7 @@
             "z": 26
           },
           "status": 1,
-          "description": "ZOf1-1",
+          "description": "zone 1",
           "rotation": {
             "x": 0,
             "y": 0,
@@ -71,9 +50,9 @@
             "z": -2
           },
           "scale": {
-            "x": 1,
-            "y": 1,
-            "z": 1
+              "x": 1,
+              "y": 1,
+              "z": 1
           },
           "status": 1,
           "description": "Working",
@@ -92,9 +71,9 @@
             "z": -2
           },
           "scale": {
-            "x": 1,
-            "y": 1,
-            "z": 1
+              "x": 1,
+              "y": 1,
+              "z": 1
           },
           "status": 2,
           "description": "Not Working",
@@ -113,9 +92,9 @@
             "z": -2
           },
           "scale": {
-            "x": 1,
-            "y": 1,
-            "z": 1
+              "x": 1,
+              "y": 1,
+              "z": 1
           },
           "status": 1,
           "description": "Working",

@@ -1,4 +1,4 @@
-﻿import * as THREE from '/lib/three/three.js';
+import * as THREE from '/lib/three/three.js';
 import { OrbitControls } from '/lib/three/OrbitControls.js';
 import { GLTFLoader } from '/lib/three/GLTFLoader.js';
 import { FBXLoader } from '/lib/three/FBXLoader.js';
@@ -297,8 +297,7 @@ function displayZoneButton(models) {
         if (model.type === ModelsType.CUBEZONE_MODEL.value) {
             const button = document.createElement('a');
             button.textContent = `${model.description}`;
-            button.href = "javascript:void(0)";
-            button.onclick = () => moveCameraToZone(model);
+            button.onclick = () => moveCameraToZone(model.position);
             zoneButtonContainer.appendChild(button);
         }
     });
@@ -354,9 +353,8 @@ function moveCameraToTarget(target) {
         const t = Math.min(elapsed / duration, 1);
 
         camera.position.lerpVectors(startPosition, targetPosition, t);
-        
-        camera.lookAt(targetPosition);
         camera.rotation.set(target.rotation.x, target.rotation.y, target.rotation.z);
+        camera.lookAt(targetPosition);
 
         if (t < 1) {
             requestAnimationFrame(animateCamera);
@@ -366,19 +364,10 @@ function moveCameraToTarget(target) {
     requestAnimationFrame(animateCamera);
 }
 
-function moveCameraToZone(model) {
-    const offset = new THREE.Vector3(
-        model.scale.x ,
-        model.scale.y , 
-        model.scale.z  
-    );
+function moveCameraToZone(position) {
 
     const targetPosition = new THREE.Vector3();
-    targetPosition.set(
-        model.position.x - (offset.x/2) + 2,
-        model.position.y + (offset.y/2) -3,
-        model.position.z + (offset.z/2) - 1
-    );
+    targetPosition.set(position.x - (position.x / 2), position.y + (position.y / 2), 6 );
 
     const startPosition = camera.position.clone();
     const startTime = performance.now();
@@ -388,12 +377,9 @@ function moveCameraToZone(model) {
         const elapsed = time - startTime;
         const t = Math.min(elapsed / duration, 1);
 
-        // Update camera position
         camera.position.lerpVectors(startPosition, targetPosition, t);
-        camera.lookAt(model.position);
-        camera.rotation.set(0, Math.PI * -.20, 0);
-        controls.position = new THREE.Vector3(targetPosition.x, targetPosition.y, targetPosition.z)
-        controls.rotation = new THREE.Vector3(camera.rotation.x, camera.rotation.y, camera.rotation.z);
+        camera.lookAt(targetPosition);
+        camera.rotation.set(-0.5, -0.5, -0.3);
 
         if (t < 1) {
             requestAnimationFrame(animateCamera);
@@ -402,7 +388,6 @@ function moveCameraToZone(model) {
 
     requestAnimationFrame(animateCamera);
 }
-
 
 // Fetch model data and load models
 fetchModelData().then(data => {
@@ -415,10 +400,10 @@ renderer.domElement.addEventListener('click', onMouseClick);
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
-    //controls.update(0.5);
+    controls.update();
     renderer.render(scene, camera);
-    console.log("camera position | X : " + camera.position.x + " Y: " + camera.position.y + " Z:" + camera.position.z);
-    console.log("camera Rotation | X : " + camera.rotation.x + " Y: " + camera.rotation.y + " Z:" + camera.rotation.z);
+    //console.log("camera position | X : " + camera.position.x + " Y: " + camera.position.y + " Z:" + camera.position.z);
+    //console.log("camera Rotation | X : " + camera.rotation.x + " Y: " + camera.rotation.y + " Z:" + camera.rotation.z);
 
     if (complitedLoading) {
         displayZoneButton(modelsCubeZone);
