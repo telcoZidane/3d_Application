@@ -69,7 +69,7 @@ async function fetchModelData() {
     }
 }
 
-// EnumHandler, ModelsType, ModelStatus remain the same
+// EnumHandler, ModelsType remain the same
 class EnumHandler {
     constructor(enumObject) {
         this.enumObject = enumObject;
@@ -104,6 +104,7 @@ const ModelStatus = Object.freeze({
 const modelsTypeHandler = new EnumHandler(ModelsType);
 const modelStatusHandler = new EnumHandler(ModelStatus);
 
+
 class SimpleModel {
     constructor(url, position, scale, type, status, description, rotation, components = []) {
         this.url = url;
@@ -118,7 +119,7 @@ class SimpleModel {
     }
 
     load(scene) {
-        // Add zone cube hire ...
+        // Add zone cube here ...
         if (this.type === ModelsType.CUBEZONE_MODEL.value) {
             const roomGeometry = new THREE.BoxGeometry(this.scale.x, this.scale.y, this.scale.z); // Adjust size as needed
             const roomMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000, transparent: true, opacity: 0.3 });
@@ -131,7 +132,6 @@ class SimpleModel {
             scene.add(roomCube);
         }
         else {
-
             const loader = this.url.endsWith('.glb') ? new GLTFLoader() : new FBXLoader();
 
             loader.load(this.url, (object) => {
@@ -172,19 +172,19 @@ class SimpleModel {
 
     loadComponents(scene) {
         this.components.forEach(componentData => {
-                const component = new SimpleModel(
-                    componentData.url,
-                    {
-                        x: this.position.x + componentData.position.x,
-                        y: this.position.y + componentData.position.y,
-                        z: this.position.z + componentData.position.z,
-                    },
-                    componentData.scale,
-                    componentData.type,
-                    componentData.status,
-                    componentData.description,
-                    componentData.rotation // Pass rotation to the component
-                );
+            const component = new SimpleModel(
+                componentData.url,
+                {
+                    x: this.position.x + componentData.position.x,
+                    y: this.position.y + componentData.position.y,
+                    z: this.position.z + componentData.position.z,
+                },
+                componentData.scale,
+                componentData.type,
+                componentData.status,
+                componentData.description,
+                componentData.rotation // Pass rotation to the component
+            );
             component.load(scene);
             if (component.type === ModelsType.CUBEZONE_MODEL.value) {
                 if (!modelsCubeZone.includes(component)) {
@@ -271,13 +271,13 @@ function displayStatusCard(model) {
     const statusCard = document.getElementById('status-card');
     statusCard.style.display = 'block';
 
-    // Add a button to toggle dragging
+    // Populate the status card with model information
     statusCard.innerHTML = `
         <h3>${modelsTypeHandler.getDisplayNameByValue(model.type)} Status</h3>
         <p>Position: X=${model.position.x}, Y=${model.position.y}, Z=${model.position.z}</p>
-        <p>Status: ${modelStatusHandler.getDisplayNameByValue(model.status) || 'N/A'}</p>
+ <p>Status: ${modelStatusHandler.getDisplayNameByValue(model.status) || 'N/A'}</p>
         <p>Description: ${model.description || 'No description available'}</p>
-        ${(model.type !== ModelsType.SUPPER_MODEL.value && model.type !== ModelsType.CUBEZONE_MODEL.value) ? '<button class="btn btn-primary" id="enable-drag-btn">Enable Drag</button>' : ''}
+                ${(model.type !== ModelsType.SUPPER_MODEL.value && model.type !== ModelsType.CUBEZONE_MODEL.value) ? '<button class="btn btn-primary" id="enable-drag-btn">Enable Drag</button>' : ''}
     `;
 
     // Add event listener to the button to enable dragging
@@ -289,9 +289,11 @@ function displayStatusCard(model) {
     }
 }
 
+
+// Function to display zone buttons
 function displayZoneButton(models) {
     const zoneButtonContainer = document.getElementById('mySidenav'); // Ensure this element exists
-    zoneButtonContainer.innerHTML =  '<a class="closebtn" onclick="closeNav()">&times;</a>'; // Clear existing buttons
+    zoneButtonContainer.innerHTML = '<a class="closebtn" onclick="closeNav()">&times;</a>'; // Clear existing buttons
 
     models.forEach(model => {
         if (model.type === ModelsType.CUBEZONE_MODEL.value) {
@@ -349,17 +351,19 @@ function moveCameraToTarget(target) {
     const startTime = performance.now();
     const duration = 1000;
 
+    controls.enabled = false; // Disable OrbitControls during camera movement
+
     function animateCamera(time) {
         const elapsed = time - startTime;
         const t = Math.min(elapsed / duration, 1);
 
         camera.position.lerpVectors(startPosition, targetPosition, t);
-        
         camera.lookAt(targetPosition);
         camera.rotation.set(target.rotation.x, target.rotation.y, target.rotation.z);
-
         if (t < 1) {
             requestAnimationFrame(animateCamera);
+        } else {
+            controls.enabled = true; // Re-enable OrbitControls after movement
         }
     }
 
@@ -368,21 +372,23 @@ function moveCameraToTarget(target) {
 
 function moveCameraToZone(model) {
     const offset = new THREE.Vector3(
-        model.scale.x ,
-        model.scale.y , 
-        model.scale.z  
+        model.scale.x,
+        model.scale.y,
+        model.scale.z
     );
 
     const targetPosition = new THREE.Vector3();
     targetPosition.set(
-        model.position.x - (offset.x/2) + 2,
-        model.position.y + (offset.y/2) -3,
-        model.position.z + (offset.z/2) - 1
+        model.position.x - (offset.x / 2) + 2,
+        model.position.y + (offset.y / 2) - 3,
+        model.position.z + (offset.z / 2) - 1
     );
 
     const startPosition = camera.position.clone();
     const startTime = performance.now();
     const duration = 1000;
+
+    controls.enabled = false; // Disable OrbitControls during camera movement
 
     function animateCamera(time) {
         const elapsed = time - startTime;
@@ -391,18 +397,32 @@ function moveCameraToZone(model) {
         // Update camera position
         camera.position.lerpVectors(startPosition, targetPosition, t);
         camera.lookAt(model.position);
-        camera.rotation.set(0, Math.PI * -.20, 0);
-        controls.position = new THREE.Vector3(targetPosition.x, targetPosition.y, targetPosition.z)
-        controls.rotation = new THREE.Vector3(camera.rotation.x, camera.rotation.y, camera.rotation.z);
 
         if (t < 1) {
             requestAnimationFrame(animateCamera);
+        } else {
+            controls.enabled = true; // Re-enable OrbitControls after movement
         }
     }
 
     requestAnimationFrame(animateCamera);
 }
 
+// Animation loop
+function animate() {
+    requestAnimationFrame(animate);
+
+    if (controls.enabled) {
+        controls.update();
+    }
+
+    renderer.render(scene, camera);
+
+    if (complitedLoading) {
+        displayZoneButton(modelsCubeZone);
+        complitedLoading = false;
+    }
+}
 
 // Fetch model data and load models
 fetchModelData().then(data => {
@@ -412,20 +432,5 @@ fetchModelData().then(data => {
 // Event listener for mouse click
 renderer.domElement.addEventListener('click', onMouseClick);
 
-// Animation loop
-function animate() {
-    requestAnimationFrame(animate);
-    //controls.update(0.5);
-    renderer.render(scene, camera);
-    console.log("camera position | X : " + camera.position.x + " Y: " + camera.position.y + " Z:" + camera.position.z);
-    console.log("camera Rotation | X : " + camera.rotation.x + " Y: " + camera.rotation.y + " Z:" + camera.rotation.z);
-
-    if (complitedLoading) {
-        displayZoneButton(modelsCubeZone);
-        complitedLoading = false;
-    }
-}
-
+// Call the animate function to start rendering
 animate();
-
-
