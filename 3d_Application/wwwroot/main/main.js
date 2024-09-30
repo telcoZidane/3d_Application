@@ -415,7 +415,7 @@ renderer.domElement.addEventListener('click', onMouseClick);
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
-    //controls.update(0.5);
+    controls.update();
     renderer.render(scene, camera);
     console.log("camera position | X : " + camera.position.x + " Y: " + camera.position.y + " Z:" + camera.position.z);
     console.log("camera Rotation | X : " + camera.rotation.x + " Y: " + camera.rotation.y + " Z:" + camera.rotation.z);
