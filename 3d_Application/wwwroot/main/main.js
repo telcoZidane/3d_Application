@@ -411,10 +411,7 @@ function moveCameraToZone(model) {
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
-
-    if (controls.enabled) {
-        controls.update();
-    }
+    controls.update();
 
     renderer.render(scene, camera);
 
