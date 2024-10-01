@@ -425,7 +425,10 @@ function animate() {
 fetchModelData().then(data => {
     createModelsFromAPI(data);
 });
-
+function ActiveControleMouse(event) {
+Has conversation started by @telcoZidane. Original line has conversation started by @telcoZidane.
+    controls.enabled = true;
+}
 // Event listener for mouse click
 renderer.domElement.addEventListener('click', onMouseClick);
 renderer.domElement.addEventListener('contextmenu', ActiveControleMouse);
