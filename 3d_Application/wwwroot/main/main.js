@@ -438,6 +438,5 @@ renderer.domElement.addEventListener('click', onMouseClick);
 renderer.domElement.addEventListener('contextmenu', ActiveControleMouse);
 renderer.domElement.addEventListener('wheel', ActiveControleMouse);
 
-
 // Call the animate function to start rendering
 animate();
