@@ -308,6 +308,7 @@ function displayZoneButton(models) {
 
 // Function to handle mouse clicks
 function onMouseClick(event) {
+    controls.enabled = true;
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
 
@@ -362,8 +363,7 @@ function moveCameraToTarget(target) {
         camera.rotation.set(target.rotation.x, target.rotation.y, target.rotation.z);
         if (t < 1) {
             requestAnimationFrame(animateCamera);
-        } else {
-            controls.enabled = true; // Re-enable OrbitControls after movement
+            controls.enabled = true;
         }
     }
 
@@ -388,7 +388,7 @@ function moveCameraToZone(model) {
     const startTime = performance.now();
     const duration = 1000;
 
-    controls.enabled = false; // Disable OrbitControls during camera movement
+    controls.enabled = true; // Disable OrbitControls during camera movement
 
     function animateCamera(time) {
         const elapsed = time - startTime;
@@ -397,11 +397,13 @@ function moveCameraToZone(model) {
         // Update camera position
         camera.position.lerpVectors(startPosition, targetPosition, t);
         camera.lookAt(model.position);
+        camera.rotation.set(0, Math.PI * -.20, 0);
+        controls.position = new THREE.Vector3(targetPosition.x, targetPosition.y, targetPosition.z)
+        controls.rotation = new THREE.Vector3(camera.rotation.x, camera.rotation.y, camera.rotation.z);
 
         if (t < 1) {
             requestAnimationFrame(animateCamera);
-        } else {
-            controls.enabled = true; // Re-enable OrbitControls after movement
+            controls.enabled = false;
         }
     }
 
@@ -411,8 +413,9 @@ function moveCameraToZone(model) {
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
-    controls.update();
-
+    if (controls.enabled) {
+        controls.update();
+    }
     renderer.render(scene, camera);
 
     if (complitedLoading) {
@@ -426,10 +429,15 @@ fetchModelData().then(data => {
     createModelsFromAPI(data);
 });
 
-// Event listener for mouse click
+function ActiveControleMouse(event) {
+    controls.enabled = true;
+}
+
+// Event listener for mouse 
 renderer.domElement.addEventListener('click', onMouseClick);
 renderer.domElement.addEventListener('contextmenu', ActiveControleMouse);
 renderer.domElement.addEventListener('wheel', ActiveControleMouse);
 
+
 // Call the animate function to start rendering
-animate();
+animate();  
