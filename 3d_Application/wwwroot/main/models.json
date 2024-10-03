@@ -1,237 +1,248 @@
 [
-    {
-        "type": 1,
-        "url": "/models_Object3d/office.glb",
-        "position": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-        },
-      "scale": {
-          "x": 4,
-          "y": 4,
-          "z": 4
-      },
-        "status": 1,
-        "description": "Operational",
-        "rotation": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-        },
-      "components": [
-        {
-          "type": 3,
-          "url": "",
-          "position": {
-            "x": -4,
-            "y": 4,
-            "z": -14.5
-          },
-          "scale": {
-            "x": 12,
-            "y": 11,
-            "z": 15
-          },
-          "status": 1,
-          "description": "ZOf1-2",
-          "rotation": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          }
-        },
-        {
-          "type": 3,
-          "url": "",
-          "position": {
-            "x": 8,
-            "y": 4,
-            "z": 0
-          },
-          "scale": {
-            "x": 12,
-            "y": 11,
-            "z": 26
-          },
-          "status": 1,
-          "description": "ZOf1-1",
-          "rotation": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          }
-        },
-        {
-          "type": 2,
-          "url": "/models_Object3d/ModelPc.glb",
-          "position": {
-            "x": 10,
-            "y": 0.5,
-            "z": -2
-          },
-          "scale": {
-            "x": 1,
-            "y": 1,
-            "z": 1
-          },
-          "status": 1,
-          "description": "Working",
-          "rotation": {
-            "x": 0,
-            "y": 90,
-            "z": 0
-          }
-        },
-        {
-          "type": 2,
-          "url": "/models_Object3d/ModelPc.glb",
-          "position": {
-            "x": 15,
-            "y": 0.5,
-            "z": -2
-          },
-          "scale": {
-            "x": 1,
-            "y": 1,
-            "z": 1
-          },
-          "status": 2,
-          "description": "Not Working",
-          "rotation": {
-            "x": 0,
-            "y": 10,
-            "z": 0
-          }
-        },
-        {
-          "type": 2,
-          "url": "/models_Object3d/ModelPc.glb",
-          "position": {
-            "x": 20,
-            "y": 0.5,
-            "z": -2
-          },
-          "scale": {
-            "x": 1,
-            "y": 1,
-            "z": 1
-          },
-          "status": 1,
-          "description": "Working",
-          "rotation": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          }
-        }
-      ]
+  {
+    "id": "e3b0c442-98fc-4b57-b595-56b5e6cbe99a",
+    "type": 1,
+    "url": "/models_Object3d/office.glb",
+    "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
     },
-    {
-        "type": 1,
-        "url": "/models_Object3d/office.glb",
+    "scale": {
+      "x": 4,
+      "y": 4,
+      "z": 4
+    },
+    "status": 1,
+    "description": "Operational",
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "components": [
+      {
+        "id": "d7168e87-3d26-4d49-b042-bbb43d5f5c95",
+        "type": 3,
+        "url": "",
         "position": {
-            "x": 24,
-            "y": 0,
-            "z": 0
-        },
-      "scale": {
-          "x": 4,
+          "x": -4,
           "y": 4,
-          "z": 4
-      },
+          "z": -14.5
+        },
+        "scale": {
+          "x": 12,
+          "y": 11,
+          "z": 15
+        },
         "status": 1,
-        "description": "Operational",
+        "description": "ZOf1-2",
         "rotation": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-        },
-      "components": [
-        {
-            "type": 3,
-            "url": "",
-            "position": {
-                "x": -4,
-                "y": 4,
-                "z": -14.5
-            },
-            "scale": {
-                "x": 12,
-                "y": 11,
-                "z": 15
-            },
-            "status": 1,
-            "description": "ZOf2-2",
-            "rotation": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            }
-        },
-        {
-            "type": 3,
-            "url": "",
-            "position": {
-                "x": 8,
-                "y": 4,
-                "z": 0
-            },
-            "scale": {
-                "x": 12,
-                "y": 11,
-                "z": 26
-            },
-            "status": 1,
-            "description": "ZOf2-1",
-            "rotation": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            }
-        },
-        {
-          "type": 2,
-          "url": "/models_Object3d/ModelPc.glb",
-          "position": {
-            "x": 1,
-            "y": 0.5,
-            "z": -2
-          },
-          "scale": {
-            "x": 1,
-            "y": 1,
-            "z": 1
-          },
-          "status": 1,
-          "description": "Working",
-          "rotation": {
-            "x": 0,
-            "y": 0.7853981633974483,
-            "z": 0
-          }
-        },
-        {
-          "type": 2,
-          "url": "/models_Object3d/ModelPc.glb",
-          "position": {
-            "x": 3,
-            "y": 0.5,
-            "z": -2
-          },
-          "scale": {
-              "x": 1,
-              "y": 1,
-              "z": 1
-          },
-          "status": 1,
-          "description": "Working",
-          "rotation": {
-            "x": 0,
-            "y": 0.7853981633974483,
-            "z": 0
-          }
+          "x": 0,
+          "y": 0,
+          "z": 0
         }
-      ]
-    }
+      },
+      {
+        "id": "fc13a8bb-1246-495e-8b8e-86b1c9a3f11d",
+        "type": 3,
+        "url": "",
+        "position": {
+          "x": 8,
+          "y": 4,
+          "z": 0
+        },
+        "scale": {
+          "x": 12,
+          "y": 11,
+          "z": 26
+        },
+        "status": 1,
+        "description": "ZOf1-1",
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "5b120c97-6b72-40d3-bce4-d4128709d08d",
+        "type": 2,
+        "url": "/models_Object3d/ModelPc.glb",
+        "position": {
+          "x": 10,
+          "y": 0.5,
+          "z": -2
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "status": 1,
+        "description": "Working",
+        "rotation": {
+          "x": 0,
+          "y": 90,
+          "z": 0
+        }
+      },
+      {
+        "id": "c4f9d4e5-92df-420f-bfb7-5049f1785f19",
+        "type": 2,
+        "url": "/models_Object3d/ModelPc.glb",
+        "position": {
+          "x": 15,
+          "y": 0.5,
+          "z": -2
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "status": 2,
+        "description": "Not Working",
+        "rotation": {
+          "x": 0,
+          "y": 10,
+          "z": 0
+        }
+      },
+      {
+        "id": "81679856-d9d4-47af-ae3f-0d6f4a1e66d0",
+        "type": 2,
+        "url": "/models_Object3d/ModelPc.glb",
+        "position": {
+          "x": 20,
+          "y": 0.5,
+          "z": -2
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "status": 1,
+        "description": "Working",
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "b2fa5d9e-4c21-4f98-bbfa-26a9b6d26b9b",
+    "type": 1,
+    "url": "/models_Object3d/office.glb",
+    "position": {
+      "x": 24,
+      "y": 0,
+      "z": 0
+    },
+    "scale": {
+      "x": 4,
+      "y": 4,
+      "z": 4
+    },
+    "status": 1,
+    "description": "Operational",
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "components": [
+      {
+        "id": "3a8a7740-73da-44c6-9fe8-78f152b131ff",
+        "type": 3,
+        "url": "",
+        "position": {
+          "x": -4,
+          "y": 4,
+          "z": -14.5
+        },
+        "scale": {
+          "x": 12,
+          "y": 11,
+          "z": 15
+        },
+        "status": 1,
+        "description": "ZOf2-2",
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "addd2b4b-726e-4ffb-b2c9-4c1c2f64dba8",
+        "type": 3,
+        "url": "",
+        "position": {
+          "x": 8,
+          "y": 4,
+          "z": 0
+        },
+        "scale": {
+          "x": 12,
+          "y": 11,
+          "z": 26
+        },
+        "status": 1,
+        "description": "ZOf2-1",
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "756e22be-e45f-4e07-bba2-406c1d48a219",
+        "type": 2,
+        "url": "/models_Object3d/ModelPc.glb",
+        "position": {
+          "x": 1,
+          "y": 0.5,
+          "z": -2
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "status": 1,
+        "description": "Working",
+        "rotation": {
+          "x": 0,
+          "y": 0.7853981633974483,
+          "z": 0
+        }
+      },
+      {
+        "id": "468f9b1e-e05f-4f74-9f6e-94da83d1c01f",
+        "type": 2,
+        "url": "/models_Object3d/ModelPc.glb",
+        "position": {
+          "x": 3,
+          "y": 0.5,
+          "z": -2
+        },
+        "scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        },
+        "status": 1,
+        "description": "Working",
+        "rotation": {
+          "x": 0,
+          "y": 0.7853981633974483,
+          "z": 0
+        }
+      }
+    ]
+  }
 ]

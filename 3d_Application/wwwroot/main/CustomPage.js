@@ -9,3 +9,7 @@ function closeNav() {
     document.getElementById("main-view").style.marginLeft = "0";
     document.getElementById("status-card").style.marginLeft = "0"
 }
+function closeStatusCard() {
+    const statusCard = document.getElementById('status-card');
+    statusCard.style.display = 'none';
+}

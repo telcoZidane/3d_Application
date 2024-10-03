@@ -9,7 +9,7 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x87CEEB);
 
 // Camera setup
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.set(10, 10, 10);
 camera.lookAt(new THREE.Vector3(0, 0, 0));
 
@@ -30,8 +30,14 @@ window.addEventListener('resize', resizeRenderer); // Adjust on window resize
 // Controls setup
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
-controls.dampingFactor = 0.2;
 controls.enableZoom = true;
+controls.maxPolarAngle = Math.PI / 2;
+controls.mouseButtons = {
+    LEFT: THREE.MOUSE.ROTATE,
+    MIDDLE: THREE.MOUSE.DOLLY,
+    RIGHT: THREE.MOUSE.PAN
+}
+controls.autoRotate = false;
 
 // Lights setup
 const lightLeft = new THREE.DirectionalLight(0xffffff, 5);
@@ -104,9 +110,9 @@ const ModelStatus = Object.freeze({
 const modelsTypeHandler = new EnumHandler(ModelsType);
 const modelStatusHandler = new EnumHandler(ModelStatus);
 
-
 class SimpleModel {
-    constructor(url, position, scale, type, status, description, rotation, components = []) {
+    constructor(id, url, position, scale, type, status, description, rotation, components = []) {
+        this.id = id;
         this.url = url;
         this.position = position;
         this.scale = scale;
@@ -114,8 +120,8 @@ class SimpleModel {
         this.model = null;
         this.status = status;
         this.description = description;
-        this.rotation = rotation; // Added rotation property
-        this.components = components;  // To store child components like PCs
+        this.rotation = rotation;
+        this.components = components;
     }
 
     load(scene) {
@@ -173,6 +179,7 @@ class SimpleModel {
     loadComponents(scene) {
         this.components.forEach(componentData => {
             const component = new SimpleModel(
+                componentData.id,
                 componentData.url,
                 {
                     x: this.position.x + componentData.position.x,
@@ -183,7 +190,7 @@ class SimpleModel {
                 componentData.type,
                 componentData.status,
                 componentData.description,
-                componentData.rotation // Pass rotation to the component
+                componentData.rotation
             );
             component.load(scene);
             if (component.type === ModelsType.CUBEZONE_MODEL.value) {
@@ -209,8 +216,8 @@ class SimpleModel {
 
     updateColor() {
         if (this.model) {
-            if (this.type !== 1) {
-                const color = this.status === 1 ? 0x00ff00 : 0xff0000; // Green if active, red otherwise
+            if (this.type !== ModelsType.SUPPER_MODEL.value) {
+                const color = this.status === ModelStatus.Working.value ? 0x00ff00 : 0xff0000;
                 this.model.traverse((child) => {
                     if (child.isMesh) {
                         child.material.color.set(color);
@@ -225,13 +232,14 @@ class SimpleModel {
 function createModelsFromAPI(modelData) {
     modelData.forEach(item => {
         const model = new SimpleModel(
+            item.id,
             item.url,
             item.position,
             item.scale,
             item.type,
             item.status,
             item.description,
-            item.rotation, // Use rotation from JSON
+            item.rotation,
             item.components
         );
         model.load(scene);
@@ -273,11 +281,12 @@ function displayStatusCard(model) {
 
     // Populate the status card with model information
     statusCard.innerHTML = `
+        <a class="closebtn" onclick="closeStatusCard()">&times;</a>
         <h3>${modelsTypeHandler.getDisplayNameByValue(model.type)} Status</h3>
         <p>Position: X=${model.position.x}, Y=${model.position.y}, Z=${model.position.z}</p>
- <p>Status: ${modelStatusHandler.getDisplayNameByValue(model.status) || 'N/A'}</p>
+        <p>Status: ${modelStatusHandler.getDisplayNameByValue(model.status) || 'N/A'}</p>
         <p>Description: ${model.description || 'No description available'}</p>
-                ${(model.type !== ModelsType.SUPPER_MODEL.value && model.type !== ModelsType.CUBEZONE_MODEL.value) ? '<button class="btn btn-primary" id="enable-drag-btn">Enable Drag</button>' : ''}
+        ${(model.type !== ModelsType.SUPPER_MODEL.value && model.type !== ModelsType.CUBEZONE_MODEL.value) ? '<button class="btn btn-primary" id="enable-drag-btn">Enable Drag</button>' : ''}
     `;
 
     // Add event listener to the button to enable dragging
@@ -288,7 +297,6 @@ function displayStatusCard(model) {
         });
     }
 }
-
 
 // Function to display zone buttons
 function displayZoneButton(models) {
@@ -360,7 +368,7 @@ function moveCameraToTarget(target) {
 
         camera.position.lerpVectors(startPosition, targetPosition, t);
         camera.lookAt(targetPosition);
-        camera.rotation.set(target.rotation.x, target.rotation.y, target.rotation.z);
+        camera.rotation.set(target.rotation.x, target.rotation.y, target.rotation.z * Math.PI*2);
         if (t < 1) {
             requestAnimationFrame(animateCamera);
             controls.enabled = true;
@@ -414,6 +422,11 @@ function moveCameraToZone(model) {
 function animate() {
     requestAnimationFrame(animate);
     if (controls.enabled) {
+        //console.log("--------------------------");
+        //console.log("controls x:" + controls.position0.x + "controls Y:" + controls.position0.y + "controls Z:" + controls.position0.z);
+        //console.log("camera x:" + camera.position.x + "camera Y:" + camera.position.y + "camera Z:" + camera.position.z);
+        //console.log("--------------------------");
+        controls.position0 = camera.position;
         controls.update();
     }
     renderer.render(scene, camera);
@@ -438,6 +451,5 @@ renderer.domElement.addEventListener('click', onMouseClick);
 renderer.domElement.addEventListener('contextmenu', ActiveControleMouse);
 renderer.domElement.addEventListener('wheel', ActiveControleMouse);
 
-
 // Call the animate function to start rendering
-animate();  
+animate();

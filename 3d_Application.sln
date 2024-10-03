@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.35201.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "3d_Application", "3d_Application\3d_Application.csproj", "{30A6043D-63E9-4E47-B4FB-4916894593B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3d_Application.API", "3d_Application.API\3d_Application.API.csproj", "{43641A55-DB6A-48F3-9424-3F424D63C253}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "3d_Application.API", "3d_Application.API\3d_Application.API.csproj", "{43641A55-DB6A-48F3-9424-3F424D63C253}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
