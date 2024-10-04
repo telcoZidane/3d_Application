@@ -1,3 +1,9 @@
+html, body {
+    height: 100%;
+}
+
+/*css index*/
+
 body {
     margin: 0;
     overflow: hidden;
@@ -70,4 +76,18 @@ body {
     top:10px;
     right: 10px;
     z-index:100;
+}
+
+/*css Editor */
+
+.full-page{
+    height:100%;
+    margin:0;
+}
+
+.main-editor {
+    height: 100%;
+}
+.menu-editor {
+    height: 100%;
 }
