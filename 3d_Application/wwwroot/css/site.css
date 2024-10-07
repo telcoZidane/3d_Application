@@ -2,7 +2,7 @@ html, body {
     height: 100%;
 }
 
-/*css index*/
+/* CSS Index */
 
 body {
     margin: 0;
@@ -21,7 +21,6 @@ body {
     display: none;
     z-index: 10;
 }
-
 
 .sidenav {
     height: 100%;
@@ -71,23 +70,52 @@ body {
             font-size: 18px;
         }
 }
-#showNavBar{
-    position:absolute;
-    top:10px;
+
+#showNavBar {
+    position: absolute;
+    top: 10px;
     right: 10px;
-    z-index:100;
+    z-index: 100;
 }
 
-/*css Editor */
+/* CSS Editor */
 
-.full-page{
-    height:100%;
-    margin:0;
+.full-page {
+    height: 100%;
+    margin: 0;
 }
 
 .main-editor {
     height: 100%;
 }
+
 .menu-editor {
     height: 100%;
 }
+
+#ui-container {
+    position:absolute;
+     right:0;
+     bottom:10%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 10px;
+}
+
+    #ui-container button {
+        margin: 5px;
+        padding: 10px 15px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.8);
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+        #ui-container button:hover {
+            background-color: rgba(255, 255, 255, 1);
+            transform: scale(1.05);
+        }
+
