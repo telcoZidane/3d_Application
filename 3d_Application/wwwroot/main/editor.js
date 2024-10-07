@@ -144,7 +144,6 @@ floor.position.set(0, -1, 0); // Slight offset to avoid overlapping with the gri
 scene.add(floor);
 
 // Create an instance of ViewHelper
-const viewHelper = new ViewHelper(camera, document.getElementById('editor-view'));
 
 //// Optional: Set labels for the axes if needed
 //viewHelper.setLabels('X Axis', 'Y Axis', 'Z Axis');
@@ -157,4 +156,32 @@ function animate() {
 }
 
 animate();
+//randring scene controle navigation
+const scenexyz = new THREE.Scene();
+scenexyz.background = new THREE.Color(0xAAAAAA);
 
+// Renderer setup
+const rendererxyz = new THREE.WebGLRenderer();
+document.getElementById('xyz-view').appendChild(rendererxyz.domElement);
+
+const cameraxyz = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
+cameraxyz.position.set(0,2, 0);
+const controlsxyz = new OrbitControls(cameraxyz, rendererxyz.domElement);
+controlsxyz.enabled = false;
+const lightxyz = new THREE.DirectionalLight(0xffffff, 5);
+lightxyz.position.set(0, 0, 0).normalize();
+scenexyz.add(lightxyz);
+
+const uiContainer = document.getElementById('editor-view');
+const viewHelper = new ViewHelper(camera, uiContainer);
+scenexyz.add(viewHelper);
+// Optional: Set labels for the axes if needed
+viewHelper.setLabels('X', 'Y', 'Z');
+
+function animatexyz() {
+    requestAnimationFrame(animatexyz);
+    controlsxyz.update();
+    rendererxyz.render(scenexyz, cameraxyz);
+}
+
+animatexyz();
