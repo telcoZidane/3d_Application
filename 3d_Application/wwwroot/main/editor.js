@@ -8,7 +8,7 @@ scene.background = new THREE.Color(0xAAAAAA);
 
 // Camera setup
 const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(10, 10, 10);
+camera.position.set(10, 5, 10);
 camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 // Renderer setup
@@ -51,9 +51,14 @@ const floorGeometry = new THREE.PlaneGeometry(1000, 1000);
 const floorMaterial = new THREE.MeshBasicMaterial({ color: 0x808080, opacity: 0.5, transparent: true });
 const floor = new THREE.Mesh(floorGeometry, floorMaterial);
 floor.rotation.x = -Math.PI / 2;
-floor.position.set(0, -1, 0); // Slight offset to avoid overlapping with the grid
+floor.position.set(0, 0, 0); // Slight offset to avoid overlapping with the grid
 scene.add(floor);
 
+// Create a cube and add it to the scene
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshBasicMaterial({ color: 0xff0000 }); // Red color
+const cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
 // UI Interaction for navigation
 const uiContainer = document.getElementById('ui-container');
 
