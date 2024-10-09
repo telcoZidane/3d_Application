@@ -8,6 +8,8 @@ import { DragControls } from '/lib/three/DragControls.js';
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x87CEEB);
 
+const IsTestMode = false;
+
 // Camera setup
 const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.set(10, 10, 10);
@@ -135,6 +137,7 @@ class SimpleModel {
             roomCube.position.set(this.position.x, this.position.y, this.position.z);
             roomCube.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z);
             roomCube.userData = { parentModel: this };
+            roomCube.visible = IsTestMode;
             scene.add(roomCube);
         }
         else {

@@ -11,11 +11,6 @@
     <Content Include="models_Object3d\Bicycle.glb" />
     <Content Include="models_Object3d\ModelPc.glb" />
     <Content Include="models_Object3d\office.glb" />
-    <Content Include="models_Object3d\Office_base.glb" />
-    <Content Include="models_Object3d\Office_base04.glb" />
-    <Content Include="models_Object3d\Office_base05.glb" />
-    <Content Include="models_Object3d\Office_base06.glb" />
-    <Content Include="models_Object3d\Office_base3.glb" />
   </ItemGroup>
 
   <ItemGroup>

@@ -118,4 +118,15 @@ body {
             background-color: rgba(255, 255, 255, 1);
             transform: scale(1.05);
         }
-
+.nav-link{
+    color:#818181 !important;
+}
+.nav-tabs {
+    border-bottom: 1px solid #f8f9fa !important;
+}
+.bg-nav-cart {
+    background: #fff;
+}
+nav.bg-light {
+    background-color: #efe6e6 !important;
+}
