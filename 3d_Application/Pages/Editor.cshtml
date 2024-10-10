@@ -64,16 +64,68 @@
                 <!-- Tab panes -->
                 <div class="tab-content pt-1">
                     <div class="tab-pane active" id="home-just" role="tabpanel" aria-labelledby="home-tab-justified">
-                        <p>
-                            Chocolate cake sweet roll lemon drops marzipan chocolate cake cupcake cotton candy. Dragée ice cream
-                            dragée biscuit chupa chups bear claw cupcake brownie cotton candy. Sesame snaps topping cupcake cake.
-                            Macaroon lemon drops gummies danish marzipan donut.
-                        </p>
-                        <p>
-                            Chocolate bar soufflé tiramisu tiramisu jelly-o carrot cake gummi bears cake. Candy canes wafer
-                            croissant donut bonbon dragée bear claw jelly sugar plum. Sweet lemon drops caramels croissant
-                            cheesecake jujubes carrot cake fruitcake. Halvah biscuit lemon drops fruitcake tart.
-                        </p>
+                        <div class="container">
+                            <!-- Drag & Drop Section -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Drag &amp; Drop</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div id="jstree-drag-drop" class="jstree">
+                                        <ul>
+                                            <!-- Your existing tree structure here -->
+                                            <li id="j4_1" class="jstree-node jstree-closed"><a href="#"><i class="jstree-icon jstree-themeicon far fa-folder jstree-themeicon-custom"></i>css</a></li>
+                                            <li id="j4_4" class="jstree-node jstree-open">
+                                                <a href="#"><i class="jstree-icon jstree-themeicon far fa-folder jstree-themeicon-custom"></i>img</a>
+                                                <ul>
+                                                    <li id="j4_7" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-themeicon far fa-file-image text-success jstree-themeicon-custom"></i>avatar.png</a></li>
+                                                    <li id="j4_5" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-themeicon far fa-file-image text-success jstree-themeicon-custom"></i>bg.jpg</a></li>
+                                                    <li id="j4_6" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-themeicon far fa-file-image text-success jstree-themeicon-custom"></i>logo.png</a></li>
+                                                </ul>
+                                            </li>
+                                            <li id="j4_8" class="jstree-node jstree-open">
+                                                <a href="#"><i class="jstree-icon jstree-themeicon far fa-folder jstree-themeicon-custom"></i>js</a>
+                                                <ul>
+                                                    <li id="j4_9" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-themeicon fab fa-node-js text-warning jstree-themeicon-custom"></i>jquery.js</a></li>
+                                                    <li id="j4_10" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-themeicon fab fa-node-js text-warning jstree-themeicon-custom"></i>app.js</a></li>
+                                                </ul>
+                                            </li>
+                                            <li id="j4_11" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-themeicon fab fa-html5 text-danger jstree-themeicon-custom"></i>index.html</a></li>
+                                            <li id="j4_12" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-themeicon fab fa-html5 text-danger jstree-themeicon-custom"></i>page-one.html</a></li>
+                                            <li id="j4_13" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-themeicon fab fa-html5 text-danger jstree-themeicon-custom"></i>page-two.html</a></li>
+                                            <li id="j5_8" class="jstree-node jstree-closed"><a href="#"><i class="jstree-icon jstree-themeicon far fa-folder jstree-themeicon-custom"></i>jsssss</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Checkbox Section -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Checkbox</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div id="jstree-checkbox" class="jstree">
+                                        <ul>
+                                            <!-- Your existing checkbox tree structure here -->
+                                            <li id="j5_1" class="jstree-node jstree-open">
+                                                <a href="#"><i class="jstree-icon jstree-checkbox"></i><i class="jstree-icon jstree-themeicon far fa-folder jstree-themeicon-custom"></i>css</a>
+                                                <ul>
+                                                    <li id="j5_2" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-checkbox"></i><i class="jstree-icon jstree-themeicon fab fa-css3-alt text-info jstree-themeicon-custom"></i>app.css</a></li>
+                                                    <li id="j5_3" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-checkbox"></i><i class="jstree-icon jstree-themeicon fab fa-css3-alt text-info jstree-themeicon-custom"></i>style.css</a></li>
+                                                </ul>
+                                            </li>
+                                            <li id="j5_4" class="jstree-node jstree-closed"><a href="#"><i class="jstree-icon jstree-checkbox"></i><i class="jstree-icon jstree-themeicon far fa-folder jstree-themeicon-custom"></i>img</a></li>
+                                            <li id="j5_8" class="jstree-node jstree-closed"><a href="#"><i class="jstree-icon jstree-checkbox"></i><i class="jstree-icon jstree-themeicon far fa-folder jstree-themeicon-custom"></i>js</a></li>
+                                            <li id="j5_11" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-checkbox"></i><i class="jstree-icon jstree-themeicon fab fa-html5 text-danger jstree-themeicon-custom"></i>index.html</a></li>
+                                            <li id="j5_12" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-checkbox"></i><i class="jstree-icon jstree-themeicon fab fa-html5 text-danger jstree-themeicon-custom"></i>page-one.html</a></li>
+                                            <li id="j5_13" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-checkbox"></i><i class="jstree-icon jstree-themeicon fab fa-html5 text-danger jstree-themeicon-custom"></i>page-two.html</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="tab-pane" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-justified">
                         <p>
@@ -115,3 +167,4 @@
 
     </div>
 <script type="module" src="~/main/editor.js"></script>
+

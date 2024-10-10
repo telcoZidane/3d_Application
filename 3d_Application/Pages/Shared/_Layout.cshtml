@@ -6,6 +6,9 @@
     <title>@ViewData["Title"] - _3d_Application</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel ="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/vendors/css/extensions/jstree.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="~/lib/font-awesome/css/font-awesome.min.css">
 </head>
 <body>
     <main role="main" class ="full-page">
@@ -15,6 +18,11 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    
+
+    <script src="~/lib/vendors/js/vendors.min.js" asp-append-version="true"></script>
+    <script src="~/lib/vendors/js/extensions/jstree.min.js"></script>
+    <script src="~/lib/tree/ext-component-tree.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 
