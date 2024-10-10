@@ -1,14 +1,13 @@
 ﻿import * as THREE from '/lib/three/three.js';
 import { OrbitControls } from '/lib/three/OrbitControls.js';
-import { GLTFLoader } from '/lib/three/GLTFLoader.js';
-import { FBXLoader } from '/lib/three/FBXLoader.js';
 import { DragControls } from '/lib/three/DragControls.js';
+import {MODELS, SimpleModel } from './SimpleModel.js';
+import { ModelsType, ModelStatus, EnumHandler } from './EnumHandler.js';
 
 // Scene setup
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x87CEEB);
 
-const IsTestMode = false;
 
 // Camera setup
 const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -60,8 +59,6 @@ floor.position.set(0, -1, 0); // Rotate floor to be horizontal
 scene.add(floor);
 
 let models = [];
-let modelsCubeZone = [];
-let complitedLoading = false;
 let draggableObjects = []; // Store draggable objects here
 let enabledDragModels = []; // Store models that can be dragged
 
@@ -77,159 +74,9 @@ async function fetchModelData() {
     }
 }
 
-// EnumHandler, ModelsType remain the same
-class EnumHandler {
-    constructor(enumObject) {
-        this.enumObject = enumObject;
-    }
-
-    getDisplayNameByValue(value) {
-        for (const key in this.enumObject) {
-            if (this.enumObject[key].value === value) {
-                return this.enumObject[key].displayName;
-            }
-        }
-        return null;
-    }
-
-    getDisplayNameByKey(key) {
-        return this.enumObject[key]?.displayName || null;
-    }
-}
-
-const ModelsType = Object.freeze({
-    SUPPER_MODEL: { displayName: "Office Model", value: 1 },
-    PC_MODEL: { displayName: "PC Model", value: 2 },
-    CUBEZONE_MODEL: { displayName: "Cube zone Model", value: 3 },
-});
-
-const ModelStatus = Object.freeze({
-    Suppoer: { displayName: "Support Model", value: 0 },
-    Working: { displayName: "Working", value: 1 },
-    Not_Working: { displayName: "Not Working", value: 2 },
-});
-
 const modelsTypeHandler = new EnumHandler(ModelsType);
 const modelStatusHandler = new EnumHandler(ModelStatus);
 
-class SimpleModel {
-    constructor(id, url, position, scale, type, status, description, rotation, components = []) {
-        this.id = id;
-        this.url = url;
-        this.position = position;
-        this.scale = scale;
-        this.type = type;
-        this.model = null;
-        this.status = status;
-        this.description = description;
-        this.rotation = rotation;
-        this.components = components;
-    }
-
-    load(scene) {
-        // Add zone cube here ...
-        if (this.type === ModelsType.CUBEZONE_MODEL.value) {
-            const roomGeometry = new THREE.BoxGeometry(this.scale.x, this.scale.y, this.scale.z); // Adjust size as needed
-            const roomMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000, transparent: true, opacity: 0.3 });
-            const roomCube = new THREE.Mesh(roomGeometry, roomMaterial);
-
-            // Set position and add to the scene
-            roomCube.position.set(this.position.x, this.position.y, this.position.z);
-            roomCube.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z);
-            roomCube.userData = { parentModel: this };
-            roomCube.visible = IsTestMode;
-            scene.add(roomCube);
-        }
-        else {
-            const loader = this.url.endsWith('.glb') ? new GLTFLoader() : new FBXLoader();
-
-            loader.load(this.url, (object) => {
-                this.model = this.url.endsWith('.glb') ? object.scene : object;
-                this.model.position.set(this.position.x, this.position.y, this.position.z);
-                this.model.scale.set(this.scale.x, this.scale.y, this.scale.z);
-
-                // Apply rotation
-                this.model.rotation.set(
-                    this.rotation.x,
-                    this.rotation.y,
-                    this.rotation.z
-                );
-
-                // Traverse the model and set userData for meshes
-                this.model.traverse((child) => {
-                    if (child.isMesh) {
-                        child.userData = { parentModel: this };
-                        // Set opacity to 0.5 on load
-                        child.material.transparent = true;
-                        child.material.opacity = 0.5;
-                    }
-                });
-
-                scene.add(this.model);
-
-                // Load child components if any
-                this.loadComponents(scene);
-
-                // Set initial color based on status
-                this.updateColor();
-            }, undefined, (error) => {
-                console.error('Error loading model:', error);
-            });
-        }
-
-    }
-
-    loadComponents(scene) {
-        this.components.forEach(componentData => {
-            const component = new SimpleModel(
-                componentData.id,
-                componentData.url,
-                {
-                    x: this.position.x + componentData.position.x,
-                    y: this.position.y + componentData.position.y,
-                    z: this.position.z + componentData.position.z,
-                },
-                componentData.scale,
-                componentData.type,
-                componentData.status,
-                componentData.description,
-                componentData.rotation
-            );
-            component.load(scene);
-            if (component.type === ModelsType.CUBEZONE_MODEL.value) {
-                if (!modelsCubeZone.includes(component)) {
-                    modelsCubeZone.push(component);
-                }
-            }
-            models.push(component);
-        });
-        complitedLoading = true;
-    }
-
-    setOpacity(opacity) {
-        if (this.model) {
-            this.model.traverse((child) => {
-                if (child.isMesh) {
-                    child.material.transparent = true;
-                    child.material.opacity = opacity;
-                }
-            });
-        }
-    }
-
-    updateColor() {
-        if (this.model) {
-            if (this.type !== ModelsType.SUPPER_MODEL.value) {
-                const color = this.status === ModelStatus.Working.value ? 0x00ff00 : 0xff0000;
-                this.model.traverse((child) => {
-                    if (child.isMesh) {
-                        child.material.color.set(color);
-                    }
-                });
-            }
-        }
-    }
-}
 
 // Function to create models from the local JSON data
 function createModelsFromAPI(modelData) {
@@ -246,7 +93,6 @@ function createModelsFromAPI(modelData) {
             item.components
         );
         model.load(scene);
-        models.push(model);
     });
 
     // Setup Drag Controls without any draggable objects initially
@@ -338,7 +184,8 @@ function onMouseClick(event) {
             models.forEach(model => {
                 if (model !== parentModel) {
                     model.setOpacity(0.5);
-                } else {
+                }
+                else {
                     // Only move camera if the model type is not 'support'
                     if (parentModel.type !== ModelsType.SUPPER_MODEL.value && parentModel.type !== ModelsType.CUBEZONE_MODEL.value) {
                         model.setOpacity(1);
@@ -430,13 +277,12 @@ function animate() {
         //console.log("camera x:" + camera.position.x + "camera Y:" + camera.position.y + "camera Z:" + camera.position.z);
         //console.log("--------------------------");
         controls.position0 = camera.position;
-        controls.update();
+            controls.update();
     }
     renderer.render(scene, camera);
-
-    if (complitedLoading) {
-        displayZoneButton(modelsCubeZone);
-        complitedLoading = false;
+    if (models.length != MODELS.length) {
+        models = [...MODELS];
+        displayZoneButton(models);
     }
 }
 
