@@ -66,6 +66,28 @@
         }
       },
       {
+        "id": "fc13a8bb-1246-495e-8b8e-86b1c9a3f11z",
+        "type": 2,
+        "url": "/models_Object3d/air_conditioner.glb",
+        "position": {
+          "x": 10,
+          "y": 8,
+          "z": -11.9
+        },
+        "scale": {
+          "x": 0.2,
+          "y": 0.2,
+          "z": 0.2
+        },
+        "status": 1,
+        "description": "air conditioner",
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
         "id": "5b120c97-6b72-40d3-bce4-d4128709d08d",
         "type": 2,
         "url": "/models_Object3d/ModelPc.glb",
@@ -196,6 +218,28 @@
         "rotation": {
           "x": 0,
           "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "fc13a8bb-1246-495e-8b8e-86b1c9a3f11x",
+        "type": 2,
+        "url": "/models_Object3d/air_conditioner.glb",
+        "position": {
+          "x": 1.5,
+          "y": 9,
+          "z": -15
+        },
+        "scale": {
+          "x": 0.2,
+          "y": 0.2,
+          "z": 0.2
+        },
+        "status": 1,
+        "description": "air conditioner",
+        "rotation": {
+          "x": 0,
+          "y": -0.50,
           "z": 0
         }
       },

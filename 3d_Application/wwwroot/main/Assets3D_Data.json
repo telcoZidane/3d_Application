@@ -1,72 +1,79 @@
 ﻿[
-    {
-        "ID": "e03f00a0-ff63-4a83-8c40-9d5de420d28a",
-        "name": "Bicycle",
-        "IdType": 1,
-        "path": "/models_Object3d/Bicycle.glb",
-        "img": "/img/img-1.jpg"
-    },
-    {
-        "ID": "7c0e36c5-0e31-42bc-bb98-6b9283daef88",
-        "name": "Chaise",
-        "IdType": 2,
-        "path": "/models_Object3d/chaise-v1.glb",
-        "img": "/img/img-1.jpg"
-    },
-    {
-        "ID": "b1954d7c-99c4-4c4f-b2d4-5923dfe58f3e",
-        "name": "Desktop",
-        "IdType": 3,
-        "path": "/models_Object3d/desktop-g-v1.glb",
-        "img": "/img/img-1.jpg"
-    },
-    {
-        "ID": "fa1ee3a7-cc34-47eb-8f3a-cb38cddf60e5",
-        "name": "Ecron V1",
-        "IdType": 4,
-        "path": "/models_Object3d/Ecron-v1.glb",
-        "img": "/img/img-1.jpg"
-    },
-    {
-        "ID": "d647c2a7-d7d0-4091-bc67-11ae592264ff",
-        "name": "Ecron V2",
-        "IdType": 5,
-        "path": "/models_Object3d/Ecron-v2.glb",
-        "img": "/img/img-1.jpg"
-    },
-    {
-        "ID": "8f1cf2ed-8e49-4b91-999c-23c3a368d147",
-        "name": "Model PC",
-        "IdType": 6,
-        "path": "/models_Object3d/ModelPc.glb",
-        "img": "/img/img-1.jpg"
-    },
-    {
-        "ID": "ec45b9a6-c5ed-4c38-a8a3-f2c57954c8c8",
-        "name": "Office",
-        "IdType": 7,
-        "path": "/models_Object3d/office.glb",
-        "img": "/img/img-1.jpg"
-    },
-    {
-        "ID": "cd87de0c-1d9b-4f3f-a5f3-3a9f39a8272e",
-        "name": "Souris V1",
-        "IdType": 8,
-        "path": "/models_Object3d/souris-v1.glb",
-        "img": "/img/img-1.jpg"
-    },
-    {
-        "ID": "e2d0b7b3-d8af-4903-9c1d-e4b663a28229",
-        "name": "Souris V2",
-        "IdType": 9,
-        "path": "/models_Object3d/souris-v2.glb",
-        "img": "/img/img-1.jpg"
-    },
-    {
-        "ID": "c09d5e15-5f5d-4dc5-bf37-3bfb68f84d25",
-        "name": "Table",
-        "IdType": 10,
-        "path": "/models_Object3d/table-v1.glb",
-        "img": "/img/img-1.jpg"
-    }
+  {
+    "ID": "e03f00a0-ff63-4a83-8c40-9d5de420d28a",
+    "name": "Bicycle",
+    "IdType": 1,
+    "path": "/models_Object3d/Bicycle.glb",
+    "img": "/img/img-1.jpg"
+  },
+  {
+    "ID": "7c0e36c5-0e31-42bc-bb98-6b9283daef88",
+    "name": "Chaise",
+    "IdType": 2,
+    "path": "/models_Object3d/chaise-v1.glb",
+    "img": "/img/img-1.jpg"
+  },
+  {
+    "ID": "b1954d7c-99c4-4c4f-b2d4-5923dfe58f3e",
+    "name": "Desktop",
+    "IdType": 3,
+    "path": "/models_Object3d/desktop-g-v1.glb",
+    "img": "/img/img-1.jpg"
+  },
+  {
+    "ID": "fa1ee3a7-cc34-47eb-8f3a-cb38cddf60e5",
+    "name": "Ecron V1",
+    "IdType": 4,
+    "path": "/models_Object3d/Ecron-v1.glb",
+    "img": "/img/img-1.jpg"
+  },
+  {
+    "ID": "d647c2a7-d7d0-4091-bc67-11ae592264ff",
+    "name": "Ecron V2",
+    "IdType": 5,
+    "path": "/models_Object3d/Ecron-v2.glb",
+    "img": "/img/img-1.jpg"
+  },
+  {
+    "ID": "8f1cf2ed-8e49-4b91-999c-23c3a368d147",
+    "name": "Model PC",
+    "IdType": 6,
+    "path": "/models_Object3d/ModelPc.glb",
+    "img": "/img/img-1.jpg"
+  },
+  {
+    "ID": "ec45b9a6-c5ed-4c38-a8a3-f2c57954c8c8",
+    "name": "Office",
+    "IdType": 7,
+    "path": "/models_Object3d/office.glb",
+    "img": "/img/img-1.jpg"
+  },
+  {
+    "ID": "cd87de0c-1d9b-4f3f-a5f3-3a9f39a8272e",
+    "name": "Souris V1",
+    "IdType": 8,
+    "path": "/models_Object3d/souris-v1.glb",
+    "img": "/img/img-1.jpg"
+  },
+  {
+    "ID": "e2d0b7b3-d8af-4903-9c1d-e4b663a28229",
+    "name": "Souris V2",
+    "IdType": 9,
+    "path": "/models_Object3d/souris-v2.glb",
+    "img": "/img/img-1.jpg"
+  },
+  {
+    "ID": "c09d5e15-5f5d-4dc5-bf37-3bfb68f84d25",
+    "name": "Table",
+    "IdType": 10,
+    "path": "/models_Object3d/table-v1.glb",
+    "img": "/img/img-1.jpg"
+  },
+  {
+    "ID": "c09d5e15-5f5d-4dc5-bf37-3bfb68f84d26",
+    "name": "Table",
+    "IdType": 10,
+    "path": "/models_Object3d/air_conditioner.glb",
+    "img": "/img/img-1.jpg"
+  }
 ]

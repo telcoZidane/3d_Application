@@ -31,7 +31,7 @@ export class SimpleModel {
 
             // Set position and add to the scene
             roomCube.position.set(this.position.x, this.position.y, this.position.z);
-            roomCube.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z);
+            roomCube.rotation.set(Math.PI * this.rotation.x, Math.PI * this.rotation.y, Math.PI * this.rotation.z);
             roomCube.userData = { parentModel: this };
             roomCube.visible = IsTestMode;
             scene.add(roomCube);
@@ -46,7 +46,7 @@ export class SimpleModel {
                 this.model.scale.set(this.scale.x, this.scale.y, this.scale.z);
 
                 // Apply rotation
-                this.model.rotation.set(this.rotation.x, this.rotation.y, this.rotation.z);
+                this.model.rotation.set(Math.PI * this.rotation.x, Math.PI * this.rotation.y, Math.PI * this.rotation.z);
 
                 // Traverse the model and set userData for meshes
                 this.model.traverse((child) => {
@@ -56,12 +56,13 @@ export class SimpleModel {
                         child.material.opacity = 0.5;
                     }
                 });
-
-                scene.add(this.model);
                 MODELS.push(this);
+                scene.add(this.model);
                 this.updateColor();
                 // Load child components if any
-                this.loadComponents(scene);
+                if (this.components.length > 0) {
+                    this.loadComponents(scene);
+                }
 
                 // Set initial color based on status
                 
@@ -95,13 +96,16 @@ export class SimpleModel {
     }
 
     setOpacity(opacity) {
-        if (this.model) {
-            this.model.traverse((child) => {
+        const obj = MODELS.find(model => model.id === this.id); // Find the model with matching id
+        if (obj && obj.model) {
+            obj.model.traverse((child) => {
                 if (child.isMesh) {
-                    child.material.transparent = true;
-                    child.material.opacity = opacity;
+                    child.material.transparent = true; // Enable transparency
+                    child.material.opacity = opacity;  // Set the desired opacity
                 }
             });
+        } else {
+            console.warn(`Model with id ${this.id} not found in MODELS.`);
         }
     }
 
