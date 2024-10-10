@@ -75,11 +75,11 @@ function moveToFace(axis) {
     const targetPosition = new THREE.Vector3();
     
     if (axis === 'X') {
-        targetPosition.set(10, 0, 0);
+        targetPosition.set(10, 2, 0);
     } else if (axis === 'Y') {
         targetPosition.set(0, 10, 0);
     } else if (axis === 'Z') {
-        targetPosition.set(0, 0, 10);
+        targetPosition.set(0, 2, 10);
     }
 
     // Animation for smooth transition
