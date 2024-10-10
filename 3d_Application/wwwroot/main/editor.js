@@ -2,6 +2,10 @@ import * as THREE from '/lib/three/three.js';
 import { OrbitControls } from '/lib/three/OrbitControls.js';
 import  '/main/tween.js'
 
+
+// tables Assets 3D object 
+const Assets3DObjects = [];
+
 // Scene setup
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xAAAAAA);
@@ -91,6 +95,48 @@ function moveToFace(axis) {
     camera.lookAt(0, 0, 0); // Always look at the origin
 }
 
+// Function to fetch data from the local JSON file
+async function fetch_Assets3D_Data() {
+    try {
+        const response = await fetch('main/Assets3D_Data.json');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching model data:', error);
+        return [];
+    }
+}
+
+// API
+function createAssets3DObjectFromAPI(modelData) {
+    modelData.forEach(item => {
+        Assets3DObjects.push(item);
+        displayCartAssets3DObjects(item)
+    });
+
+}
+function displayCartAssets3DObjects(model) {
+    const Assets3Dcart = document.getElementById('canva_Assets_3D_objects');
+
+    // Populate the status card with model information
+    Assets3Dcart.innerHTML += `
+    <div id="id_${model.ID}" class="card w-20 mt-3" >
+        <img src="${model.img}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-text text-center">${model.name}</h5>
+        </div>
+    </div>`;
+
+
+
+    if (document.getElementById(`id_${model.ID}`)) {
+        document.getElementById(`id_${model.ID}`).addEventListener('click', function () {
+            alert(`id_${model.ID}`);
+            console.log(`id_${model.ID}`);
+        });
+    }
+}
+
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
@@ -98,5 +144,9 @@ function animate() {
     TWEEN.update(); // Update tween animations
     renderer.render(scene, camera);
 }
+fetch_Assets3D_Data().then(data => {
+    createAssets3DObjectFromAPI(data);
+});
+
 
 animate();
