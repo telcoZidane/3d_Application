@@ -9,7 +9,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="FichierDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Fichier
                     </a>
@@ -26,12 +26,10 @@
                         <li>
                             <a class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Existant 3D Model</a>
                         </li>
-                        <li><a class="dropdown-item" >Groupe</a></li>
-                        <li><a class="dropdown-item" >3D Model</a></li>
+                        <li><a class="dropdown-item">Groupe</a></li>
+                        <li><a class="dropdown-item">3D Model</a></li>
                     </ul>
                 </li>
-               
-                
             </ul>
             <div class="d-flex form-check">
                 <input class="form-check-input mx-1" type="checkbox" value="" id="AutoSave">
@@ -68,39 +66,17 @@
                             <!-- Drag & Drop Section -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">Drag &amp; Drop</h4>
+                                    <h4 class="card-title">{Scene}</h4>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body"> 
                                     <div id="jstree-drag-drop" class="jstree">
-                                        <ul>
-                                            <!-- Your existing tree structure here -->
-                                            <li id="j4_1" class="jstree-node jstree-closed"><a href="#"><i class="jstree-icon jstree-themeicon far fa-folder jstree-themeicon-custom"></i>css</a></li>
-                                            <li id="j4_4" class="jstree-node jstree-open">
-                                                <a href="#"><i class="jstree-icon jstree-themeicon far fa-folder jstree-themeicon-custom"></i>img</a>
-                                                <ul>
-                                                    <li id="j4_7" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-themeicon far fa-file-image text-success jstree-themeicon-custom"></i>avatar.png</a></li>
-                                                    <li id="j4_5" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-themeicon far fa-file-image text-success jstree-themeicon-custom"></i>bg.jpg</a></li>
-                                                    <li id="j4_6" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-themeicon far fa-file-image text-success jstree-themeicon-custom"></i>logo.png</a></li>
-                                                </ul>
-                                            </li>
-                                            <li id="j4_8" class="jstree-node jstree-open">
-                                                <a href="#"><i class="jstree-icon jstree-themeicon far fa-folder jstree-themeicon-custom"></i>js</a>
-                                                <ul>
-                                                    <li id="j4_9" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-themeicon fab fa-node-js text-warning jstree-themeicon-custom"></i>jquery.js</a></li>
-                                                    <li id="j4_10" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-themeicon fab fa-node-js text-warning jstree-themeicon-custom"></i>app.js</a></li>
-                                                </ul>
-                                            </li>
-                                            <li id="j4_11" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-themeicon fab fa-html5 text-danger jstree-themeicon-custom"></i>index.html</a></li>
-                                            <li id="j4_12" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-themeicon fab fa-html5 text-danger jstree-themeicon-custom"></i>page-one.html</a></li>
-                                            <li id="j4_13" class="jstree-node jstree-leaf"><a href="#"><i class="jstree-icon jstree-themeicon fab fa-html5 text-danger jstree-themeicon-custom"></i>page-two.html</a></li>
-                                            <li id="j5_8" class="jstree-node jstree-closed"><a href="#"><i class="jstree-icon jstree-themeicon far fa-folder jstree-themeicon-custom"></i>jsssss</a></li>
-                                        </ul>
+                                        
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Checkbox Section -->
-                            <div class="card">
+                            <div class="card" style="display:none">
                                 <div class="card-header">
                                     <h4 class="card-title">Checkbox</h4>
                                 </div>
@@ -166,5 +142,13 @@
         </div>
 
     </div>
-<script type="module" src="~/main/editor.js"></script>
+@section Scripts {
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="~/main/editor.js"></script>
+    <script src="~/lib/vendors/js/vendors.min.js" asp-append-version="true"></script>
+    <script src="~/lib/vendors/js/extensions/jstree.min.js" asp-append-version="true"></script>
+    <script src="~/lib/tree/ext-component-tree.js" asp-append-version="true"></script>
+}
+
+
 

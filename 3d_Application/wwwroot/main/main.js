@@ -135,16 +135,15 @@ function displayStatusCard(model) {
         <p>Position: X=${model.position.x}, Y=${model.position.y}, Z=${model.position.z}</p>
         <p>Status: ${modelStatusHandler.getDisplayNameByValue(model.status) || 'N/A'}</p>
         <p>Description: ${model.description || 'No description available'}</p>
-        ${(model.type !== ModelsType.SUPPER_MODEL.value && model.type !== ModelsType.CUBEZONE_MODEL.value) ? '<button class="btn btn-primary" id="enable-drag-btn">Enable Drag</button>' : ''}
     `;
 
     // Add event listener to the button to enable dragging
-    const dragButton = document.getElementById('enable-drag-btn');
-    if (dragButton) {
-        dragButton.addEventListener('click', function () {
-            enableDragging(model);
-        });
-    }
+    //const dragButton = document.getElementById('enable-drag-btn');
+    //if (dragButton) {
+    //    dragButton.addEventListener('click', function () {
+    //        enableDragging(model);
+    //    });
+    //}
 }
 
 // Function to display zone buttons

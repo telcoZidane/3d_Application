@@ -207,94 +207,94 @@ $(function () {
   }
 
   // Drag Drop
-  if (dragDrop.length) {
-    dragDrop.jstree({
-      core: {
-        check_callback: true,
-        data: [
-          {
-            text: 'css',
-            children: [
-              {
-                text: 'app.css',
-                type: 'css'
-              },
-              {
-                text: 'style.css',
-                type: 'css'
-              }
-            ]
-          },
-          {
-            text: 'img',
-            state: {
-              opened: true
-            },
-            children: [
-              {
-                text: 'bg.jpg',
-                type: 'img'
-              },
-              {
-                text: 'logo.png',
-                type: 'img'
-              },
-              {
-                text: 'avatar.png',
-                type: 'img'
-              }
-            ]
-          },
-          {
-            text: 'js',
-            state: {
-              opened: true
-            },
-            children: [
-              {
-                text: 'jquery.js',
-                type: 'js'
-              },
-              {
-                text: 'app.js',
-                type: 'js'
-              }
-            ]
-          },
-          {
-            text: 'index.html',
-            type: 'html'
-          },
-          {
-            text: 'page-one.html',
-            type: 'html'
-          },
-          {
-            text: 'page-two.html',
-            type: 'html'
-          }
-        ]
-      },
-      plugins: ['types', 'dnd'],
-      types: {
-        default: {
-          icon: 'far fa-folder'
-        },
-        html: {
-          icon: 'fab fa-html5 text-danger'
-        },
-        css: {
-          icon: 'fab fa-css3-alt text-info'
-        },
-        img: {
-          icon: 'far fa-file-image text-success'
-        },
-        js: {
-          icon: 'fab fa-node-js text-warning'
-        }
-      }
-    });
-  }
+  //if (dragDrop.length) {
+  //  dragDrop.jstree({
+  //    core: {
+  //      check_callback: true,
+  //      data: [
+  //        {
+  //          text: 'css',
+  //          children: [
+  //            {
+  //              text: 'app.css',
+  //              type: 'css'
+  //            },
+  //            {
+  //              text: 'style.css',
+  //              type: 'css'
+  //            }
+  //          ]
+  //        },
+  //        {
+  //          text: 'img',
+  //          state: {
+  //            opened: true
+  //          },
+  //          children: [
+  //            {
+  //              text: 'bg.jpg',
+  //              type: 'img'
+  //            },
+  //            {
+  //              text: 'logo.png',
+  //              type: 'img'
+  //            },
+  //            {
+  //              text: 'avatar.png',
+  //              type: 'img'
+  //            }
+  //          ]
+  //        },
+  //        {
+  //          text: 'js',
+  //          state: {
+  //            opened: true
+  //          },
+  //          children: [
+  //            {
+  //              text: 'jquery.js',
+  //              type: 'js'
+  //            },
+  //            {
+  //              text: 'app.js',
+  //              type: 'js'
+  //            }
+  //          ]
+  //        },
+  //        {
+  //          text: 'index.html',
+  //          type: 'html'
+  //        },
+  //        {
+  //          text: 'page-one.html',
+  //          type: 'html'
+  //        },
+  //        {
+  //          text: 'page-two.html',
+  //          type: 'html'
+  //        }
+  //      ]
+  //    },
+  //    plugins: ['types', 'dnd'],
+  //    types: {
+  //      default: {
+  //        icon: 'far fa-folder'
+  //      },
+  //      html: {
+  //        icon: 'fab fa-html5 text-danger'
+  //      },
+  //      css: {
+  //        icon: 'fab fa-css3-alt text-info'
+  //      },
+  //      img: {
+  //        icon: 'far fa-file-image text-success'
+  //      },
+  //      js: {
+  //        icon: 'fab fa-node-js text-warning'
+  //      }
+  //    }
+  //  });
+  //}
 
   // Checkbox
   if (checkboxTree.length) {

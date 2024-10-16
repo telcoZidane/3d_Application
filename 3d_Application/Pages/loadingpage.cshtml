@@ -1,0 +1,14 @@
+﻿@page
+@model _3d_Application.Pages.loadingpageModel
+@{
+    ViewData["Title"] = "Loading 3D Page";
+}
+
+<div id="container3d" style="width: 100%; height: 100vh;">
+    <!-- Canvas rendering zone will be here -->
+</div>
+
+@section Scripts {
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="~/main/LoadingImgEditor.js"></script>
+}
