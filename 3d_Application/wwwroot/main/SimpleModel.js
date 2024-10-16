@@ -4,7 +4,7 @@ import { FBXLoader } from '/lib/three/FBXLoader.js';
 import { ModelsType, ModelStatus, EnumHandler } from './EnumHandler.js'; // Import enums and EnumHandler
 
 export let complitedLoading =false;
-export const IsTestMode = false;
+export const IsTestMode = true ;
 export const MODELS = [];
 export class SimpleModel {
 

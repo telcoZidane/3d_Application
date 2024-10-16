@@ -3,12 +3,12 @@ import { OrbitControls } from '/lib/three/OrbitControls.js';
 import '/main/tween.js';
 import { MODELS, SimpleModel } from './SimpleModel.js';
 import { ModelsType, ModelStatus, EnumHandler } from './EnumHandler.js';
-import { DragControls } from '/lib/three/DragControls.js';
+import { TransformControls } from '/lib/three/TransformControls.js';
 
 // Global array for 3D assets
-const Objects3D = [];
-let enabledDragModels = [];
-let models=[];
+let Objects3D = [];
+let DragModels = [];
+let models = [];
 
 // Scene setup
 const scene = new THREE.Scene();
@@ -62,7 +62,27 @@ floor.rotation.x = -Math.PI / 2;
 floor.position.set(0, -1, 0);
 scene.add(floor);
 
+// Add TransformControls for precise manipulation
+const transformControls = new TransformControls(camera, renderer.domElement);
+scene.add(transformControls);
 
+// Disable orbit controls when using TransformControls
+transformControls.addEventListener('mouseDown', function () {
+    controls.enabled = false; // Disable orbit controls on transform start
+    console.log(transformControls.getMode());
+
+});
+
+transformControls.addEventListener('mouseUp', function () {
+    controls.enabled = true; // Re-enable orbit controls on transform end
+    console.log(transformControls.getMode());
+
+});
+
+transformControls.addEventListener('objectChange', function () {
+    // Any other actions that should happen during the transform
+    console.log(transformControls.getMode());
+});
 function createModelsFromAPI(modelData) {
     modelData.forEach(item => {
         const model = new SimpleModel(
@@ -79,28 +99,9 @@ function createModelsFromAPI(modelData) {
         model.load(scene);
     });
 }
-// Setup Drag Controls
-let dragControls;
-function setupDragControls() {
-    dragControls = new DragControls(enabledDragModels, camera, renderer.domElement);
-    dragControls.addEventListener('dragstart', function (event) {
-        controls.enabled = false; // Disable orbit controls when dragging
-    });
 
-    dragControls.addEventListener('dragend', function (event) {
-        controls.enabled = true; // Re-enable orbit controls after dragging
-    });
-}
 
 // Function to enable dragging for a specific model
-function enableDragging(model) {  // active clike for drag and drop in object selected 
-    if (!enabledDragModels.includes(model.model)) {
-        enabledDragModels.push(model.model); // Add the model to the list of draggable objects
-        setupDragControls();
-    }
-   
-}
-
 
 function onMouseClick(event) {
     controls.enabled = true;
@@ -118,29 +119,14 @@ function onMouseClick(event) {
         const target = intersects[0].object;
         const parentModel = target.userData.parentModel;
         console.log(parentModel);
-        if (parentModel.type !== ModelsType.SUPPER_MODEL.value && parentModel.type !== ModelsType.CUBEZONE_MODEL.value) {
-            enableDragging(parentModel);
+        if (parentModel && parentModel.type !== ModelsType.SUPPER_MODEL.value && parentModel.type !== ModelsType.CUBEZONE_MODEL.value) {
+            transformControls.detach();
+            transformControls.attach(parentModel.model);
             parentModel.setOpacity(1);
-        }
-        //if (parentModel) {
-        //    models.forEach(model => {
-        //        if (model !== parentModel) {
-        //            model.setOpacity(0.5);
-        //        }
-        //        else {
-        //            // Only move camera if the model type is not 'support'
-        //            if (parentModel.type !== ModelsType.SUPPER_MODEL.value && parentModel.type !== ModelsType.CUBEZONE_MODEL.value) {
-        //                model.setOpacity(1);
-        //                moveCameraToTarget(parentModel.model);
-        //            }
-        //        }
-        //    });
-
-        //    // Display status card for the selected model
-        //    displayStatusCard(parentModel);
-        //}
+            }
     }
 }
+
 
 // UI Interaction: Axis buttons for navigation
 const uiContainer = document.getElementById('ui-container');
@@ -275,9 +261,9 @@ function animate() {
     controls.update();
     TWEEN.update();
     renderer.render(scene, camera);
-    //console.log(Objects3D);
-    if (MODELS.length > models) {
+    if (MODELS.length > models.length) {
         models = [...MODELS];
+        Objects3D = MODELS.map((item) => item.model);
     }
 }
 
@@ -287,7 +273,7 @@ fetchAssets3DData('main/Assets3D_Data.json').then(data => {
 });
 
 // menu bar
-var assetPath = '../../../app-assets/';
+/*var assetPath = '../../../app-assets/';*/
 if ($('body').attr('data-framework') === 'laravel') {
     assetPath = $('body').attr('data-asset-path');
 }
