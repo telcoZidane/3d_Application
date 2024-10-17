@@ -64,6 +64,7 @@ scene.add(floor);
 
 // Add TransformControls for precise manipulation
 const transformControls = new TransformControls(camera, renderer.domElement);
+transformControls.size = .7;
 scene.add(transformControls);
 
 // Disable orbit controls when using TransformControls
@@ -123,7 +124,7 @@ function onMouseClick(event) {
             transformControls.detach();
             transformControls.attach(parentModel.model);
             parentModel.setOpacity(1);
-            }
+        }
     }
 }
 
@@ -300,6 +301,32 @@ fetchAssets3DData('main/models.json')
         createModelsFromAPI(data);
     })
     .catch(error => console.error('Error loading JSON file:', error));
+
+
+// Function to set mode on TransformControls based on the clicked button
+// Function to set the transform mode and handle button styles
+function setTransformMode(mode, button) {
+    // Set the mode of the TransformControls
+    transformControls.setMode(mode);
+
+    // Remove 'btn-primary' from all buttons and set 'btn-secondary'
+    const buttons = document.querySelectorAll('#btn-group-container button');
+    buttons.forEach(btn => {
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-secondary');
+    });
+
+    // Add 'btn-primary' to the clicked button
+    button.classList.remove('btn-secondary');
+    button.classList.add('btn-primary');
+}
+
+// Access the buttons and assign click events
+const buttons = document.querySelectorAll('#btn-group-container button');
+buttons[0].addEventListener('click', () => setTransformMode('translate', buttons[0])); // First button for translate
+buttons[1].addEventListener('click', () => setTransformMode('rotate', buttons[1]));    // Second button for rotate
+buttons[2].addEventListener('click', () => setTransformMode('scale', buttons[2]));     // Third button for scale
+
 // events mouse click
 renderer.domElement.addEventListener('click', onMouseClick);
 // Start animation

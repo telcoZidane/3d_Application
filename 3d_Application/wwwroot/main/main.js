@@ -130,7 +130,7 @@ function displayStatusCard(model) {
 
     // Populate the status card with model information
     statusCard.innerHTML = `
-        <a class="closebtn" onclick="closeStatusCard()">&times;</a>
+        <button onclick="closeStatusCard()" type="button" class="btn-close" aria-label="Close"></button>
         <h3>${modelsTypeHandler.getDisplayNameByValue(model.type)} Status</h3>
         <p>Position: X=${model.position.x}, Y=${model.position.y}, Z=${model.position.z}</p>
         <p>Status: ${modelStatusHandler.getDisplayNameByValue(model.status) || 'N/A'}</p>

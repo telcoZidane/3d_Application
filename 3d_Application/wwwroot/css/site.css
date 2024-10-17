@@ -130,3 +130,13 @@ body {
 nav.bg-light {
     background-color: #efe6e6 !important;
 }
+
+#btn-group-container {
+    position: absolute;
+    top: 3%;
+    left: 2%;
+}
+#btn-group-container button {
+    color : #fff;
+
+}
