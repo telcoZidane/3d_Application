@@ -13,9 +13,9 @@ let models = [];
 // Scene setup
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xAAAAAA);
-
+let mainView = document.getElementById('editor-view');
 // Camera setup
-const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(100, mainView.clientWidth / window.innerHeight, 0.1, 1000);
 camera.position.set(10, 5, 10);
 camera.lookAt(new THREE.Vector3(0, 0, 0));
 
@@ -26,7 +26,7 @@ document.getElementById('editor-view').appendChild(renderer.domElement);
 
 // Adjust renderer size based on the container
 function resizeRenderer() {
-    const mainView = document.getElementById('editor-view');
+    
     renderer.setSize(mainView.clientWidth, window.innerHeight);
     camera.aspect = mainView.clientWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -64,26 +64,29 @@ scene.add(floor);
 
 // Add TransformControls for precise manipulation
 const transformControls = new TransformControls(camera, renderer.domElement);
-transformControls.size = .7;
+transformControls.size = 0.7;
 scene.add(transformControls);
 
 // Disable orbit controls when using TransformControls
 transformControls.addEventListener('mouseDown', function () {
-    controls.enabled = false; // Disable orbit controls on transform start
+   controls.enabled = false; // Disable orbit controls on transform start
     console.log(transformControls.getMode());
-
 });
 
 transformControls.addEventListener('mouseUp', function () {
     controls.enabled = true; // Re-enable orbit controls on transform end
     console.log(transformControls.getMode());
-
 });
 
 transformControls.addEventListener('objectChange', function () {
-    // Any other actions that should happen during the transform
     console.log(transformControls.getMode());
 });
+
+// Cube Camera setup for light probing
+const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(256);
+const cubeCamera = new THREE.CubeCamera(1, 1000, cubeRenderTarget);
+scene.add(cubeCamera); // Add cube camera to the scene
+
 function createModelsFromAPI(modelData) {
     modelData.forEach(item => {
         const model = new SimpleModel(
@@ -101,9 +104,7 @@ function createModelsFromAPI(modelData) {
     });
 }
 
-
 // Function to enable dragging for a specific model
-
 function onMouseClick(event) {
     controls.enabled = true;
     const raycaster = new THREE.Raycaster();
@@ -112,22 +113,20 @@ function onMouseClick(event) {
     const rect = renderer.domElement.getBoundingClientRect();
     mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-
+ 
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObjects(scene.children, true);
-
+    transformControls.detach();
     if (intersects.length > 0) {
         const target = intersects[0].object;
         const parentModel = target.userData.parentModel;
         console.log(parentModel);
         if (parentModel && parentModel.type !== ModelsType.SUPPER_MODEL.value && parentModel.type !== ModelsType.CUBEZONE_MODEL.value) {
-            transformControls.detach();
             transformControls.attach(parentModel.model);
             parentModel.setOpacity(1);
         }
     }
 }
-
 
 // UI Interaction: Axis buttons for navigation
 const uiContainer = document.getElementById('ui-container');
@@ -179,6 +178,7 @@ async function fetchAssets3DData(url) {
         return [];
     }
 }
+
 const modelsTypeHandler = new EnumHandler(ModelsType);
 // Process API data and create 3D objects
 function createAssets3DObjectsFromAPI(models) {
@@ -186,6 +186,7 @@ function createAssets3DObjectsFromAPI(models) {
         displayAssets3DObjectCard(model);
     });
 }
+
 function convertJsonToJsTreeData(jsonData) {
     const treeData = jsonData.map(model => {
         return {
@@ -196,9 +197,9 @@ function convertJsonToJsTreeData(jsonData) {
             },
             children: model.components.map(component => {
                 return {
-                    text: component.description || "Component", 
-                    id: "Id_Obj_3d_"+component.id,
-                    type: (component.type == 1) ? "default" :"component"
+                    text: component.description || "Component",
+                    id: "Id_Obj_3d_" + component.id,
+                    type: (component.type == 1) ? "default" : "component"
                 };
             })
         };
@@ -262,6 +263,8 @@ function animate() {
     controls.update();
     TWEEN.update();
     renderer.render(scene, camera);
+    // Update cube camera for light probing
+    cubeCamera.update(renderer, scene); // Update cube camera each frame
     if (MODELS.length > models.length) {
         models = [...MODELS];
         Objects3D = MODELS.map((item) => item.model);
@@ -274,21 +277,21 @@ fetchAssets3DData('main/Assets3D_Data.json').then(data => {
 });
 
 // menu bar
-/*var assetPath = '../../../app-assets/';*/
+var assetPath = '../../../app-assets/';
 if ($('body').attr('data-framework') === 'laravel') {
     assetPath = $('body').attr('data-asset-path');
 }
 fetchAssets3DData('main/models.json')
     .then(data => {
-      
+
         const jsTreeData = convertJsonToJsTreeData(data);
 
-       $('#jstree-drag-drop').jstree({
-           core: {
-               check_callback: true,
+        $('#jstree-drag-drop').jstree({
+            core: {
+                check_callback: true,
                 data: jsTreeData
             },
-           plugins: ['types', 'dnd'],
+            plugins: ['types', 'dnd'],
             types: {
                 default: {
                     icon: 'fas fa-cubes'
@@ -297,11 +300,10 @@ fetchAssets3DData('main/models.json')
                     icon: 'fas fa-cube text-primary'
                 }
             }
-       });
+        });
         createModelsFromAPI(data);
     })
     .catch(error => console.error('Error loading JSON file:', error));
-
 
 // Function to set mode on TransformControls based on the clicked button
 // Function to set the transform mode and handle button styles
@@ -326,7 +328,7 @@ const buttons = document.querySelectorAll('#btn-group-container button');
 buttons[0].addEventListener('click', () => setTransformMode('translate', buttons[0])); // First button for translate
 buttons[1].addEventListener('click', () => setTransformMode('rotate', buttons[1]));    // Second button for rotate
 buttons[2].addEventListener('click', () => setTransformMode('scale', buttons[2]));     // Third button for scale
-
+setTransformMode('translate', buttons[0]);
 // events mouse click
 renderer.domElement.addEventListener('click', onMouseClick);
 // Start animation
