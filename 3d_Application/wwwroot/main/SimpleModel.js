@@ -5,7 +5,7 @@ import { ModelsType, ModelStatus, EnumHandler } from './EnumHandler.js'; // Impo
 
 export let complitedLoading =false;
 export const IsTestMode = true ;
-export const MODELS = [];
+export let MODELS = [];
 export class SimpleModel {
 
     constructor(id, url, position, scale, type, status, description, rotation, components = []) {

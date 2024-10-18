@@ -9,6 +9,7 @@ import { TransformControls } from '/lib/three/TransformControls.js';
 let Objects3D = [];
 let DragModels = [];
 let models = [];
+let jsTreeData = [];
 
 // Scene setup
 const scene = new THREE.Scene();
@@ -106,7 +107,7 @@ function createModelsFromAPI(modelData) {
 
 // Function to enable dragging for a specific model
 function onMouseClick(event) {
-    controls.enabled = true;
+    //controls.enabled = true;
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
 
@@ -198,7 +199,7 @@ function convertJsonToJsTreeData(jsonData) {
             children: model.components.map(component => {
                 return {
                     text: component.description || "Component",
-                    id: "Id_Obj_3d_" + component.id,
+                    id: component.id,
                     type: (component.type == 1) ? "default" : "component"
                 };
             })
@@ -238,7 +239,6 @@ function displayAssets3DObjectCard(model) {
     const btn_card = document.getElementById(`btn_${model.ID}`);
     btn_card.addEventListener('click', () => spawn3DModel(model));
 }
-
 // Spawn 3D model in the scene based on the ID
 function spawn3DModel(item) {
     console.log(`Spawning 3D model with ID: ${item.ID}`);
@@ -247,15 +247,18 @@ function spawn3DModel(item) {
         item.path,
         { x: 0, y: 0, z: 0 },
         { x: 1, y: 1, z: 1 },
+        4,
         1,
-        0,
         item.name,
         { x: 0, y: 0, z: 0 },
         []
     );
     model3d.load(scene);
     Objects3D.push(model3d);
+    addClonedObjectToTree(item)
 }
+
+
 
 // Main animation loop
 function animate() {
@@ -276,36 +279,99 @@ fetchAssets3DData('main/Assets3D_Data.json').then(data => {
     createAssets3DObjectsFromAPI(data);
 });
 
-// menu bar
-var assetPath = '../../../app-assets/';
-if ($('body').attr('data-framework') === 'laravel') {
-    assetPath = $('body').attr('data-asset-path');
+function loading_Dnd(DATA){
+    $('#jstree-drag-drop').jstree({
+        core: {
+            check_callback: true,
+            data: DATA
+        },
+        plugins: ['types', 'dnd'],
+        types: {
+            default: {
+                icon: 'fas fa-cubes'
+            },
+            component: {
+                icon: 'fas fa-cube text-primary'
+            }
+        }
+    });
 }
+
+function findNodeById(data, id) {
+    for (let node of data) {
+        if (node.id === String(id)) {
+            return node; // Return the found node
+        }
+        // If the node has children, search recursively
+        if (node.children) {
+            const foundNode = findNodeById(node.children, id);
+            if (foundNode) {
+                return foundNode; // Return if found in children
+            }
+        }
+    }
+    return null; // Return null if not found
+}
+
+
+
+// menu bar
 fetchAssets3DData('main/models.json')
     .then(data => {
+        jsTreeData = convertJsonToJsTreeData(data);
+        loading_Dnd(jsTreeData);
+       
+        createModelsFromAPI(data);
+        // Bind the event after the tree is loaded
+        $('#jstree-drag-drop').on('move_node.jstree', function (e, data) {
+            const droppedId = data.node.id;  // Get the ID of the dragged node
+            const targetId = data.parent;      // Get the ID of the target node
 
-        const jsTreeData = convertJsonToJsTreeData(data);
+            if (droppedId && targetId) {
+                // Update icons based on the drop
+                let droppedNode = findNodeById(jsTreeData, droppedId);
+                let targetNode = findNodeById(jsTreeData, targetId);
 
-        $('#jstree-drag-drop').jstree({
-            core: {
-                check_callback: true,
-                data: jsTreeData
-            },
-            plugins: ['types', 'dnd'],
-            types: {
-                default: {
-                    icon: 'fas fa-cubes'
-                },
-                component: {
-                    icon: 'fas fa-cube text-primary'
+                if (droppedNode) {
+                    droppedNode.type = 'component';  // Change to default icon
                 }
+
+                if (targetNode) {
+                    targetNode.type = 'default';  // Change to cube icon
+                }
+
+                // Refresh the tree to reflect changes
+                $('#jstree-drag-drop').jstree(true).settings.core.data = jsTreeData;
+                $('#jstree-drag-drop').jstree(true).refresh();
             }
         });
-        createModelsFromAPI(data);
     })
     .catch(error => console.error('Error loading JSON file:', error));
+$('#jstree-drag-drop').on('select_node.jstree', function (e, data) {
+    const selectedId = data.node.id;
+    console.log("Clicked object ID (jstree):", selectedId);
 
-// Function to set mode on TransformControls based on the clicked button
+    // Call clickedObjectAction 3la clicked item f jstree
+    alert(selectedId);
+});
+
+function addClonedObjectToTree(objectName) {
+    let item_dnd = {
+        text: objectName.name || "Model",
+        id: objectName.ID,
+        state: {
+            opened: false
+        },
+        children: []
+    };
+    jsTreeData.push(item_dnd);
+
+    // Reload tree after adding node
+    $('#jstree-drag-drop').jstree(true).settings.core.data = jsTreeData;
+    $('#jstree-drag-drop').jstree(true).refresh(); // Force tree to refresh and display new node
+}
+
+
 // Function to set the transform mode and handle button styles
 function setTransformMode(mode, button) {
     // Set the mode of the TransformControls
