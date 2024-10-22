@@ -76,11 +76,26 @@ transformControls.addEventListener('mouseDown', function () {
 
 transformControls.addEventListener('mouseUp', function () {
     controls.enabled = true; // Re-enable orbit controls on transform end
-    console.log(transformControls.getMode());
+    const object = transformControls.object;  // L'objet li katbadl f TransformControls
+    if (object) {
+        const position = object.position;
+        const rotation = object.rotation;
+        const scale = object.scale;
+
+        const dataToSave = {
+            id: object.uuid,  // unique id for object
+            position: { x: position.x, y: position.y, z: position.z },
+            rotation: { x: rotation.x, y: rotation.y, z: rotation.z },
+            scale: { x: scale.x, y: scale.y, z: scale.z }
+        };
+
+        console.log('Data to save:', dataToSave);  // katfichar data dyal modification
+        // Khassk dir save dyal hadchi (li baghi, b7al API call)
+    }
 });
 
 transformControls.addEventListener('objectChange', function () {
-    console.log(transformControls.getMode());
+   
 });
 
 // Cube Camera setup for light probing
@@ -313,8 +328,6 @@ function findNodeById(data, id) {
     return null; // Return null if not found
 }
 
-
-
 // menu bar
 fetchAssets3DData('main/models.json')
     .then(data => {
@@ -322,31 +335,45 @@ fetchAssets3DData('main/models.json')
         loading_Dnd(jsTreeData);
        
         createModelsFromAPI(data);
-        // Bind the event after the tree is loaded
-        $('#jstree-drag-drop').on('move_node.jstree', function (e, data) {
-            const droppedId = data.node.id;  // Get the ID of the dragged node
-            const targetId = data.parent;      // Get the ID of the target node
-
-            if (droppedId && targetId) {
-                // Update icons based on the drop
-                let droppedNode = findNodeById(jsTreeData, droppedId);
-                let targetNode = findNodeById(jsTreeData, targetId);
-
-                if (droppedNode) {
-                    droppedNode.type = 'component';  // Change to default icon
-                }
-
-                if (targetNode) {
-                    targetNode.type = 'default';  // Change to cube icon
-                }
-
-                // Refresh the tree to reflect changes
-                $('#jstree-drag-drop').jstree(true).settings.core.data = jsTreeData;
-                $('#jstree-drag-drop').jstree(true).refresh();
-            }
-        });
     })
     .catch(error => console.error('Error loading JSON file:', error));
+$('#jstree-drag-drop').on('move_node.jstree', function (e, data) {
+    console.log("Node dragged!");
+
+    console.log("All nodes:", getAllNodesWithChildren());
+});
+
+// Function to get all nodes and their children
+function getAllNodesWithChildren() {
+    const allNodes = $('#jstree-drag-drop').jstree(true).get_json('#', { no_state: true });
+
+    return allNodes.map(node => {
+        return {
+            id: node.id,
+            text: node.text,
+            icon: node.icon,
+            children: getChildren(node)
+        };
+    });
+}
+
+// Recursive function to get children
+function getChildren(node) {
+    const children = $('#jstree-drag-drop').jstree(true).get_children_dom(node.id);
+
+    return $(children).map(function () {
+        const childId = $(this).id;
+        const childNode = $('#jstree-drag-drop').jstree(true).get_node(childId);
+
+        return {
+            id: childNode.id,
+            text: childNode.text,
+            icon: childNode.icon,
+            children: getChildren(childNode)
+        };
+    }).get();
+}
+
 $('#jstree-drag-drop').on('select_node.jstree', function (e, data) {
     const selectedId = data.node.id;
     console.log("Clicked object ID (jstree):", selectedId);
