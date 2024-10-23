@@ -27,14 +27,14 @@ export class SimpleModel {
         if (this.type === ModelsType.CUBEZONE_MODEL.value) {
             const roomGeometry = new THREE.BoxGeometry(this.scale.x, this.scale.y, this.scale.z);
             const roomMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000, transparent: true, opacity: 0.3 });
-            const roomCube = new THREE.Mesh(roomGeometry, roomMaterial);
+            this.model = new THREE.Mesh(roomGeometry, roomMaterial);
 
             // Set position and add to the scene
-            roomCube.position.set(this.position.x, this.position.y, this.position.z);
-            roomCube.rotation.set(Math.PI * this.rotation.x, Math.PI * this.rotation.y, Math.PI * this.rotation.z);
-            roomCube.userData = { parentModel: this };
-            roomCube.visible = IsTestMode;
-            scene.add(roomCube);
+            this.model.position.set(this.position.x, this.position.y, this.position.z);
+            this.model.rotation.set(Math.PI * this.rotation.x, Math.PI * this.rotation.y, Math.PI * this.rotation.z);
+            this.model.userData = { parentModel: this };
+            this.model.visible = IsTestMode;
+            scene.add(this.model);
             MODELS.push(this);
         }
         else {
@@ -59,7 +59,7 @@ export class SimpleModel {
                 MODELS.push(this);
                 scene.add(this.model);
                 this.updateColor();
-                // Load child components if any
+
                 if (this.components.length > 0) {
                     this.loadComponents(scene);
                 }
@@ -96,7 +96,7 @@ export class SimpleModel {
     }
 
     setOpacity(opacity) {
-        const obj = MODELS.find(model => model.id === this.id); // Find the model with matching id
+        const obj = MODELS.find(model => model.id === this.id);
         if (obj && obj.model) {
             obj.model.traverse((child) => {
                 if (child.isMesh) {

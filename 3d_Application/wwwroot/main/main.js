@@ -1,14 +1,13 @@
 ﻿import * as THREE from '/lib/three/three.js';
 import { OrbitControls } from '/lib/three/OrbitControls.js';
-import { DragControls } from '/lib/three/DragControls.js';
 import {MODELS, SimpleModel } from './SimpleModel.js';
 import { ModelsType, ModelStatus, EnumHandler } from './EnumHandler.js';
-
+import { TransformControls } from '/lib/three/TransformControls.js';
 // Scene setup
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x87CEEB);
 
-
+let models = []; 
 // Camera setup
 const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.set(10, 10, 10);
@@ -25,8 +24,8 @@ function resizeRenderer() {
     camera.aspect = mainView.clientWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 }
-resizeRenderer(); // Initial resize
-window.addEventListener('resize', resizeRenderer); // Adjust on window resize
+resizeRenderer();
+window.addEventListener('resize', resizeRenderer);
 
 // Controls setup
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -55,17 +54,46 @@ const floorGeometry = new THREE.PlaneGeometry(1000, 1000);
 const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x808080 });
 const floor = new THREE.Mesh(floorGeometry, floorMaterial);
 floor.rotation.x = -Math.PI / 2;
-floor.position.set(0, -1, 0); // Rotate floor to be horizontal
+floor.position.set(0, -1, 0);
 scene.add(floor);
 
-let models = [];
-let draggableObjects = []; // Store draggable objects here
-let enabledDragModels = []; // Store models that can be dragged
+// Add TransformControls for precise manipulation
+const transformControls = new TransformControls(camera, renderer.domElement);
+transformControls.size = 0.7;
+scene.add(transformControls);
+
+transformControls.addEventListener('mouseDown', function () {
+    controls.enabled = false;
+    console.log(transformControls.getMode());
+});
+
+transformControls.addEventListener('mouseUp', function () {
+    controls.enabled = true;
+    const object = transformControls.object;
+    if (object) {
+        const position = object.position;
+        const rotation = object.rotation;
+        const scale = object.scale;
+
+        const dataToSave = {
+            id: object.uuid,
+            position: { x: position.x, y: position.y, z: position.z },
+            rotation: { x: rotation.x, y: rotation.y, z: rotation.z },
+            scale: { x: scale.x, y: scale.y, z: scale.z }
+        };
+
+        console.log('Data to save:', dataToSave);
+    }
+});
+
+//transformControls.addEventListener('objectChange', function () {
+
+//});
 
 // Function to fetch data from the local JSON file
 async function fetchModelData() {
     try {
-        const response = await fetch('main/models.json');
+        const response = await fetch('main/API.json');
         const data = await response.json();
         return data;
     } catch (error) {
@@ -94,33 +122,6 @@ function createModelsFromAPI(modelData) {
         );
         model.load(scene);
     });
-
-    // Setup Drag Controls without any draggable objects initially
-    setupDragControls();
-}
-
-// Setup Drag Controls
-let dragControls;
-function setupDragControls() {
-    dragControls = new DragControls(enabledDragModels, camera, renderer.domElement);
-
-    dragControls.addEventListener('dragstart', function (event) {
-        controls.enabled = false; // Disable orbit controls when dragging
-    });
-
-    dragControls.addEventListener('dragend', function (event) {
-        controls.enabled = true; // Re-enable orbit controls after dragging
-    });
-}
-
-// Function to enable dragging for a specific model
-function enableDragging(model) {
-    if (!enabledDragModels.includes(model.model)) {
-        enabledDragModels.push(model.model); // Add the model to the list of draggable objects
-    }
-
-    // Re-setup DragControls with the new draggable models
-    setupDragControls();
 }
 
 // Function to display the status card with a button to enable dragging
@@ -136,20 +137,12 @@ function displayStatusCard(model) {
         <p>Status: ${modelStatusHandler.getDisplayNameByValue(model.status) || 'N/A'}</p>
         <p>Description: ${model.description || 'No description available'}</p>
     `;
-
-    // Add event listener to the button to enable dragging
-    //const dragButton = document.getElementById('enable-drag-btn');
-    //if (dragButton) {
-    //    dragButton.addEventListener('click', function () {
-    //        enableDragging(model);
-    //    });
-    //}
 }
 
 // Function to display zone buttons
 function displayZoneButton(models) {
-    const zoneButtonContainer = document.getElementById('mySidenav'); // Ensure this element exists
-    zoneButtonContainer.innerHTML = '<a class="closebtn" onclick="closeNav()">&times;</a>'; // Clear existing buttons
+    const zoneButtonContainer = document.getElementById('mySidenav');
+    zoneButtonContainer.innerHTML = '<a class="closebtn" onclick="closeNav()">&times;</a>';
 
     models.forEach(model => {
         if (model.type === ModelsType.CUBEZONE_MODEL.value) {
@@ -178,23 +171,23 @@ function onMouseClick(event) {
     if (intersects.length > 0) {
         const target = intersects[0].object;
         const parentModel = target.userData.parentModel;
-
         if (parentModel) {
-            models.forEach(model => {
-                if (model !== parentModel) {
-                    model.setOpacity(0.5);
-                }
-                else {
-                    // Only move camera if the model type is not 'support'
-                    if (parentModel.type !== ModelsType.SUPPER_MODEL.value && parentModel.type !== ModelsType.CUBEZONE_MODEL.value) {
-                        model.setOpacity(1);
-                        moveCameraToTarget(parentModel.model);
+            transformControls.attach(parentModel.model);
+            if (parentModel) {
+                models.forEach(model => {
+                    if (model !== parentModel) {
+                        model.setOpacity(0.5);
                     }
-                }
-            });
-
-            // Display status card for the selected model
-            displayStatusCard(parentModel);
+                    else {
+                        if (parentModel.type !== ModelsType.SUPPER_MODEL.value && parentModel.type !== ModelsType.CUBEZONE_MODEL.value) {
+                            model.setOpacity(1);
+                            moveCameraToTarget(parentModel.model);
+                        }
+                    }
+                });
+                // Display status card for the selected model
+                displayStatusCard(parentModel);
+            }
         }
     }
 }
@@ -209,7 +202,7 @@ function moveCameraToTarget(target) {
     const startTime = performance.now();
     const duration = 1000;
 
-    controls.enabled = false; // Disable OrbitControls during camera movement
+    controls.enabled = false;
 
     function animateCamera(time) {
         const elapsed = time - startTime;
@@ -271,10 +264,6 @@ function moveCameraToZone(model) {
 function animate() {
     requestAnimationFrame(animate);
     if (controls.enabled) {
-        //console.log("--------------------------");
-        //console.log("controls x:" + controls.position0.x + "controls Y:" + controls.position0.y + "controls Z:" + controls.position0.z);
-        //console.log("camera x:" + camera.position.x + "camera Y:" + camera.position.y + "camera Z:" + camera.position.z);
-        //console.log("--------------------------");
         controls.position0 = camera.position;
             controls.update();
     }
@@ -298,6 +287,30 @@ function ActiveControleMouse(event) {
 renderer.domElement.addEventListener('click', onMouseClick);
 renderer.domElement.addEventListener('contextmenu', ActiveControleMouse);
 renderer.domElement.addEventListener('wheel', ActiveControleMouse);
+
+// Function to set the transform mode and handle button styles
+function setTransformMode(mode, button) {
+    // Set the mode of the TransformControls
+    transformControls.setMode(mode);
+
+    // Remove 'btn-primary' from all buttons and set 'btn-secondary'
+    const buttons = document.querySelectorAll('#btn-group-container button');
+    buttons.forEach(btn => {
+        btn.classList.remove('btn-primary');
+        btn.classList.add('btn-secondary');
+    });
+
+    // Add 'btn-primary' to the clicked button
+    button.classList.remove('btn-secondary');
+    button.classList.add('btn-primary');
+}
+
+// Access the buttons and assign click events
+const buttons = document.querySelectorAll('#btn-group-container button');
+buttons[0].addEventListener('click', () => setTransformMode('translate', buttons[0])); // First button for translate
+buttons[1].addEventListener('click', () => setTransformMode('rotate', buttons[1]));    // Second button for rotate
+buttons[2].addEventListener('click', () => setTransformMode('scale', buttons[2]));     // Third button for scale
+setTransformMode('translate', buttons[0]);
 
 // Call the animate function to start rendering
 animate();

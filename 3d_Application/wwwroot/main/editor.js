@@ -2,7 +2,7 @@ import * as THREE from '/lib/three/three.js';
 import { OrbitControls } from '/lib/three/OrbitControls.js';
 import '/main/tween.js';
 import { MODELS, SimpleModel } from './SimpleModel.js';
-import { ModelsType, ModelStatus, EnumHandler } from './EnumHandler.js';
+import { ModelsType, EnumHandler } from './EnumHandler.js';
 import { TransformControls } from '/lib/three/TransformControls.js';
 
 // Global array for 3D assets

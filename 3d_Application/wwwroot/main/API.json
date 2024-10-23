@@ -1,0 +1,206 @@
+[
+    {
+        "id": "e3b0c442-98fc-4b57-b595-56b5e6cbe99a",
+        "type": 1,
+        "url": "/models_Object3d/office.glb",
+        "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "scale": {
+            "x": 4,
+            "y": 4,
+            "z": 4
+        },
+        "status": 1,
+        "description": "Operational",
+        "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "components": [
+            {
+                "id": "d7168e87-3d26-4d49-b042-bbb43d5f5c95",
+                "type": 3,
+                "url": "",
+                "position": {
+                    "x": -4,
+                    "y": 4,
+                    "z": -14.5
+                },
+                "scale": {
+                    "x": 12,
+                    "y": 11,
+                    "z": 15
+                },
+                "status": 1,
+                "description": "ZOf1-2",
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            {
+                "id": "fc13a8bb-1246-495e-8b8e-86b1c9a3f11d",
+                "type": 3,
+                "url": "",
+                "position": {
+                    "x": 6,
+                    "y": 6.6,
+                    "z": 4.8
+                },
+                "scale": {
+                    "x": 12,
+                    "y": 11,
+                    "z": 26
+                },
+                "status": 1,
+                "description": "ZOf1-1",
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            }
+        ]
+    },
+    {
+        "id": "b2fa5d9e-4c21-4f98-bbfa-26a9b6d26b9b",
+        "type": 1,
+        "url": "/models_Object3d/office.glb",
+        "position": {
+            "x": 0,
+            "y": 14,
+            "z": 0
+        },
+        "scale": {
+            "x": 4,
+            "y": 4,
+            "z": 4
+        },
+        "status": 1,
+        "description": "Operational",
+        "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "components": [
+            {
+                "id": "3a8a7740-73da-44c6-9fe8-78f152b131ff",
+                "type": 3,
+                "url": "",
+                "position": {
+                    "x": -4,
+                    "y": 4,
+                    "z": -14.5
+                },
+                "scale": {
+                    "x": 12,
+                    "y": 11,
+                    "z": 15
+                },
+                "status": 1,
+                "description": "ZOf2-2",
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            {
+                "id": "addd2b4b-726e-4ffb-b2c9-4c1c2f64dba8",
+                "type": 3,
+                "url": "",
+                "position": {
+                    "x": 6,
+                    "y": 6.6,
+                    "z": 4.8
+                },
+                "scale": {
+                    "x": 12,
+                    "y": 11,
+                    "z": 26
+                },
+                "status": 1,
+                "description": "ZOf2-1",
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            }
+        ]
+    },
+    {
+        "id": "b2fa5d9e-4c21-4f98-bbfa-26a9b6d26b9c",
+        "type": 1,
+        "url": "/models_Object3d/office.glb",
+        "position": {
+            "x": 0,
+            "y": 28,
+            "z": 0
+        },
+        "scale": {
+            "x": 4,
+            "y": 4,
+            "z": 4
+        },
+        "status": 1,
+        "description": "Operational",
+        "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        "components": [
+            {
+                "id": "3a8a7740-73da-44c6-9fe8-78f152b131fg",
+                "type": 3,
+                "url": "",
+                "position": {
+                    "x": -4,
+                    "y": 4,
+                    "z": -14.5
+                },
+                "scale": {
+                    "x": 12,
+                    "y": 11,
+                    "z": 15
+                },
+                "status": 1,
+                "description": "ZOf2-2",
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            {
+                "id": "addd2b4b-726e-4ffb-b2c9-4c1c2f64dba9",
+                "type": 3,
+                "url": "",
+                "position": {
+                    "x": 6,
+                    "y": 6.6,
+                    "z": 4.8
+                },
+                "scale": {
+                    "x": 12,
+                    "y": 11,
+                    "z": 26
+                },
+                "status": 1,
+                "description": "ZOf2-1",
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            }
+        ]
+    }
+]
